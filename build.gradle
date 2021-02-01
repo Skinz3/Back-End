@@ -1,0 +1,105 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.diffplug.spotless' version "5.9.0"
+    id 'java-library'
+    id 'application'
+    id 'distribution'
+    id 'jacoco'
+}
+
+group = 'fr.tezea'
+version = '0.0.1-SNAPSHOT'
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+javadoc.options.encoding = "UTF-8"
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+compileJava.dependsOn 'spotlessApply'
+
+test.finalizedBy 'jacocoTestReport'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'fr.tezea.chantiers.ChantiersApplication'
+}
+
+// Use this in order to test on Eclipse
+sourceSets {
+    main.java.srcDirs += "build/generated/sources/annotationProcessor/java/main"
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // swagger
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
+
+    // MapStruct
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.18'
+    annotationProcessor 'org.projectlombok:lombok:1.18.18'
+    testCompileOnly 'org.projectlombok:lombok:1.18.18'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.18'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+    useJUnitPlatform()
+
+    jacoco {
+        // Don't check the ChantiersApplication that only contain the main()
+        excludes += [ 'fr/tezea/chantiers/ChantiersApplication' ]
+    }
+}
+
+jacocoTestReport {
+    // Display everything except ChantiersApplication
+    classDirectories.setFrom(
+        fileTree(dir: 'build/classes/java/main/fr/tezea/chantiers/')
+            .filter({file -> !file.name.equals('ChantiersApplication.class')})
+    )
+}
+
+spotless {
+    format 'misc', {
+        target '*.gradle', '*.md'
+
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    java {
+        target '**/*.java'
+
+        licenseHeaderFile 'resources/spotless/license/LICENSE.spotless'
+
+        importOrder()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+
+        eclipse().configFile('resources/eclipse/formatter/Format_Java.xml')
+    }
+}
