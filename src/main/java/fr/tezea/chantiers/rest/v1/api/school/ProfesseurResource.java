@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/api/professeur")
+@RequestMapping("/api/v1/professeur")
 public class ProfesseurResource
 {
     private final ProfesseurService professeurService;
