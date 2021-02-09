@@ -2,6 +2,7 @@ package fr.tezea.chantiers.domain.chantier;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -12,6 +13,8 @@ import java.util.List;
 public class Chantier {
     @Id
     private long id;
+    @Transient
+    public static final String SEQUENCE_NAME = "chantier_sequence";
     private long site;
     private long client;
     private List<Long> problemes;
