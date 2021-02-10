@@ -3,12 +3,13 @@ package fr.tezea.chantiers.domain.chantier;
 import lombok.Data;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Data
-@org.springframework.data.mongodb.core.mapping.Document
-public class Document {
+@Document
+public class Media {
     @Id
     private long id;
     @Transient
