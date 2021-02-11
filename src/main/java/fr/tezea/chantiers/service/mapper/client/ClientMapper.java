@@ -21,33 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.dto.chantier;
+package fr.tezea.chantiers.service.mapper.client;
 
-import fr.tezea.chantiers.domain.chantier.StatusType;
+import fr.tezea.chantiers.domain.client.Client;
 import fr.tezea.chantiers.service.dto.client.ClientDTO;
-import fr.tezea.chantiers.service.dto.site.SiteDTO;
-import java.util.Date;
 import java.util.List;
-import lombok.Data;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Data
-public class ChantierDTO
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface ClientMapper
 {
-    private long id;
-    private SiteDTO site;
-    private ClientDTO client;
-    private List<ProblemeDTO> problemes;
-    private List<MediaDTO> medias;
-    private String adresse;
-    private List<String> ouvriers;
-    private String materiel;
-    private Date dateDebut;
-    private Date dateFin;
-    private Date heureDemarrage;
-    private int estimationTemps;
-    private String telephone;
-    private StatusType statusChantier;
-    private String nomChantier;
-    private String informationsInterne;
-    private String description;
+    @Mapping(target = "id", ignore = true)
+    Client toClient(ClientDTO clientDTO);
+
+    @InheritInverseConfiguration(name = "toClient")
+    ClientDTO toClientDTO(Client client);
+
+    List<ClientDTO> toClientDTO(List<Client> clients);
+
+    @Mapping(target = "id", ignore = true)
+    Client updateClientFromDTO(ClientDTO clientDTO, @MappingTarget Client client);
 }

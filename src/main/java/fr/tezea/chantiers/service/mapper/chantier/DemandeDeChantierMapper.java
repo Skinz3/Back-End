@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.mapper.school;
+package fr.tezea.chantiers.service.mapper.chantier;
 
-import fr.tezea.chantiers.domain.school.Professeur;
-import fr.tezea.chantiers.service.dto.school.ProfesseurDTO;
+import fr.tezea.chantiers.domain.chantier.DemandeDeChantier;
+import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
 import java.util.List;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -32,20 +32,19 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", uses = {
-        StudentMapper.class }, unmappedTargetPolicy = ReportingPolicy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface ProfesseurMapper
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface DemandeDeChantierMapper
 {
     @Mapping(target = "id", ignore = true)
-    Professeur toProfesseur(ProfesseurDTO ProfesseurDTO);
+    DemandeDeChantier toDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO);
 
-    @InheritInverseConfiguration(name = "toProfesseur")
-    ProfesseurDTO toProfesseurDTO(Professeur Professeur);
+    @InheritInverseConfiguration(name = "toDemandeDeChantier")
+    DemandeDeChantierDTO toDemandeDeChantierDTO(DemandeDeChantier demandeDeChantier);
 
-    List<ProfesseurDTO> toProfesseurDTO(List<Professeur> Professeurs);
+    List<DemandeDeChantierDTO> toDemandeDeChantierDTO(List<DemandeDeChantier> demandeDeChantiers);
 
     @Mapping(target = "id", ignore = true)
-    Professeur updateProfesseurFromDTO(ProfesseurDTO ProfesseurDTO, @MappingTarget Professeur Professeur);
+    DemandeDeChantier updateDemandeDeChantierFromDTO(DemandeDeChantierDTO demandeDeChantierDTO,
+            @MappingTarget DemandeDeChantier demandeDeChantier);
 }

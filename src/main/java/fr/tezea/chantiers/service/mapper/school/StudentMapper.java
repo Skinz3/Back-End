@@ -32,17 +32,15 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", uses = {
-        ProfesseurMapper.class }, unmappedTargetPolicy = ReportingPolicy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+        /* ProfesseurMapper.class */ }, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface StudentMapper
 {
     @Mapping(target = "id", ignore = true)
     Student toStudent(StudentDTO studentDTO);
 
     @InheritInverseConfiguration(name = "toStudent")
-    @Mapping(source = "prof.id", target = "professeurId")
     StudentDTO toStudentDTO(Student student);
 
     List<StudentDTO> toStudentDTO(List<Student> students);

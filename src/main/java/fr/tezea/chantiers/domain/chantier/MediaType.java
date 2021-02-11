@@ -21,33 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.dto.chantier;
+package fr.tezea.chantiers.domain.chantier;
 
-import fr.tezea.chantiers.domain.chantier.StatusType;
-import fr.tezea.chantiers.service.dto.client.ClientDTO;
-import fr.tezea.chantiers.service.dto.site.SiteDTO;
-import java.util.Date;
-import java.util.List;
-import lombok.Data;
-
-@Data
-public class ChantierDTO
+public enum MediaType
 {
-    private long id;
-    private SiteDTO site;
-    private ClientDTO client;
-    private List<ProblemeDTO> problemes;
-    private List<MediaDTO> medias;
-    private String adresse;
-    private List<String> ouvriers;
-    private String materiel;
-    private Date dateDebut;
-    private Date dateFin;
-    private Date heureDemarrage;
-    private int estimationTemps;
-    private String telephone;
-    private StatusType statusChantier;
-    private String nomChantier;
-    private String informationsInterne;
-    private String description;
+    SIGNATURE("Signature"), DEVIS("Devis"), FACTURE("Facture"), ETATDESLIEUX("État des lieux"), LIVRAISON("Livraison"),
+    AUTRE("Autre");
+
+    private final String type;
+
+    private MediaType(String type)
+    {
+        this.type = type;
+    }
+
+    public String getType()
+    {
+        return this.type;
+    }
+
+    public String getTypeLowerCase()
+    {
+        return this.type.toLowerCase();
+    }
 }

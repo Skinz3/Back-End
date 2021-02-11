@@ -30,5 +30,5 @@ public class StudentDTO
 {
     private long id;
     private String name;
-    private long professeurId;
+    private String professeur;
 }
