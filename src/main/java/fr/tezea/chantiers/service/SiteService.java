@@ -21,14 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.dto.school;
+package fr.tezea.chantiers.service;
 
-import lombok.Data;
+import org.springframework.stereotype.Service;
 
-@Data
-public class ProfesseurDTO
+@Service
+public class SiteService
 {
-    private long id;
-    private String monNom;
-    private String student;
 }

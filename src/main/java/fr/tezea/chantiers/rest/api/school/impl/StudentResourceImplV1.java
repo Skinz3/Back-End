@@ -21,59 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.rest.v1.api.school;
+package fr.tezea.chantiers.rest.api.school.impl;
 
+import fr.tezea.chantiers.rest.api.school.api.StudentResourceV1;
 import fr.tezea.chantiers.service.StudentService;
 import fr.tezea.chantiers.service.dto.school.StudentDTO;
 import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/student")
-public class StudentResource
+public class StudentResourceImplV1 implements StudentResourceV1
 {
     private final StudentService studentService;
 
-    public StudentResource(StudentService studentService)
+    public StudentResourceImplV1(StudentService studentService)
     {
         super();
         this.studentService = studentService;
     }
 
-    @GetMapping("/get/{id}")
-    @ResponseBody
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") long id)
     {
         return ResponseEntity.ok(this.studentService.getStudentById(id));
     }
 
-    @PostMapping("/add")
-    @ResponseBody
     public ResponseEntity<URI> addStudent(@RequestBody StudentDTO studentDTO)
     {
         URI location = URI.create(String.format("/get/%s", this.studentService.addStudent(studentDTO)));
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/update/{id}")
-    @ResponseBody
     public ResponseEntity<StudentDTO> updateStudentById(@PathVariable("id") long id, @RequestBody StudentDTO studentDTO)
     {
         return ResponseEntity.ok(this.studentService.updateStudentById(id, studentDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
-    @ResponseBody
     public ResponseEntity<Void> deleteStudentById(@PathVariable("id") long id)
     {
         this.studentService.deleteStudentById(id);

@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.rest.v1.api.school;
+package fr.tezea.chantiers.rest.api.school.api;
 
-import fr.tezea.chantiers.service.ProfesseurService;
-import fr.tezea.chantiers.service.dto.school.ProfesseurDTO;
+import fr.tezea.chantiers.service.dto.school.StudentDTO;
 import java.net.URI;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,48 +34,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/v1/professeur")
-public class ProfesseurResource
+@RequestMapping("/api/v1/student")
+public interface StudentResourceV1
 {
-    private final ProfesseurService professeurService;
-
-    public ProfesseurResource(ProfesseurService professeurService)
-    {
-        super();
-        this.professeurService = professeurService;
-    }
-
     @GetMapping("/get/{id}")
     @ResponseBody
-    public ResponseEntity<ProfesseurDTO> getProfesseurById(@PathVariable("id") long id)
-    {
-        return ResponseEntity.ok(this.professeurService.getProfesseurById(id));
-    }
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") long id);
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<URI> addProfesseur(@RequestBody ProfesseurDTO professeurDTO)
-    {
-        URI location = URI.create(String.format("/get/%s", this.professeurService.addProfesseur(professeurDTO)));
-        return ResponseEntity.created(location).build();
-    }
+    public ResponseEntity<URI> addStudent(@RequestBody StudentDTO studentDTO);
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<ProfesseurDTO> updateProfesseurById(@PathVariable("id") long id,
-            @RequestBody ProfesseurDTO professeurDTO)
-    {
-        return ResponseEntity.ok(this.professeurService.updateProfesseurById(id, professeurDTO));
-    }
+    public ResponseEntity<StudentDTO> updateStudentById(@PathVariable("id") long id,
+            @RequestBody StudentDTO studentDTO);
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteProfesseurById(@PathVariable("id") long id)
-    {
-        this.professeurService.deleteProfesseurById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+    public ResponseEntity<Void> deleteStudentById(@PathVariable("id") long id);
 }

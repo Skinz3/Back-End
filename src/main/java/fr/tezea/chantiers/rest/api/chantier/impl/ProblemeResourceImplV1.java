@@ -21,33 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.dto.chantier;
+package fr.tezea.chantiers.rest.api.chantier.impl;
 
-import fr.tezea.chantiers.domain.chantier.StatusType;
-import fr.tezea.chantiers.service.dto.client.ClientDTO;
-import fr.tezea.chantiers.service.dto.site.SiteDTO;
-import java.util.Date;
-import java.util.List;
-import lombok.Data;
+import fr.tezea.chantiers.rest.api.chantier.api.ProblemeResourceV1;
+import org.springframework.web.bind.annotation.RestController;
 
-@Data
-public class ChantierDTO
+@RestController
+public class ProblemeResourceImplV1 implements ProblemeResourceV1
 {
-    private long id;
-    private SiteDTO site;
-    private ClientDTO client;
-    private List<ProblemeDTO> problemes;
-    private List<MediaDTO> medias;
-    private String adresse;
-    private List<String> ouvriers;
-    private String materiel;
-    private Date dateDebut;
-    private Date dateFin;
-    private Date heureDemarrage;
-    private int estimationTemps;
-    private String telephone;
-    private StatusType statusChantier;
-    private String nomChantier;
-    private String informationsInterne;
-    private String description;
 }

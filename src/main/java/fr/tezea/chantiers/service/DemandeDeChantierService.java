@@ -21,13 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.repository.school;
+package fr.tezea.chantiers.service;
 
-import fr.tezea.chantiers.domain.school.Professeur;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
-public interface ProfesseurRepository extends MongoRepository<Professeur, Long>
+@Service
+public class DemandeDeChantierService
 {
 }

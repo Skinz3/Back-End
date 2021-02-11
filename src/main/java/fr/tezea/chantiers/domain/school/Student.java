@@ -37,5 +37,5 @@ public class Student
     @Id
     private long id;
     private String name;
-    private Professeur prof;
+    private String professeur;
 }
