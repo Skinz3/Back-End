@@ -25,6 +25,7 @@ package fr.tezea.chantiers.service.mapper.chantier;
 
 import fr.tezea.chantiers.domain.chantier.DemandeDeChantier;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
+import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierGetDTO;
 import java.util.List;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -37,14 +38,26 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface DemandeDeChantierMapper
 {
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "site", ignore = true)
+    @Mapping(target = "client", ignore = true)
     DemandeDeChantier toDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO);
 
     @InheritInverseConfiguration(name = "toDemandeDeChantier")
+    @Mapping(source = "site.id", target = "siteId")
+    @Mapping(source = "client.id", target = "clientId")
     DemandeDeChantierDTO toDemandeDeChantierDTO(DemandeDeChantier demandeDeChantier);
 
-    List<DemandeDeChantierDTO> toDemandeDeChantierDTO(List<DemandeDeChantier> demandeDeChantiers);
+    @Mapping(target = "id", ignore = true)
+    DemandeDeChantier toDemandeDeChantier(DemandeDeChantierGetDTO demandeDeChantierDTO);
+
+    @InheritInverseConfiguration(name = "toDemandeDeChantier")
+    DemandeDeChantierGetDTO toDemandeDeChantierGetDTO(DemandeDeChantier demandeDeChantier);
+
+    List<DemandeDeChantierGetDTO> toDemandeDeChantierDTO(List<DemandeDeChantier> demandeDeChantiers);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "site", ignore = true)
+    @Mapping(target = "client", ignore = true)
     DemandeDeChantier updateDemandeDeChantierFromDTO(DemandeDeChantierDTO demandeDeChantierDTO,
             @MappingTarget DemandeDeChantier demandeDeChantier);
 }

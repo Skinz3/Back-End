@@ -24,8 +24,13 @@
 package fr.tezea.chantiers.service;
 
 import fr.tezea.chantiers.domain.chantier.DemandeDeChantier;
+import fr.tezea.chantiers.domain.client.Client;
+import fr.tezea.chantiers.domain.site.Site;
 import fr.tezea.chantiers.repository.chantier.DemandeDeChantierRepository;
+import fr.tezea.chantiers.repository.client.ClientRepository;
+import fr.tezea.chantiers.repository.site.SiteRepository;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
+import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierGetDTO;
 import fr.tezea.chantiers.service.mapper.chantier.DemandeDeChantierMapper;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -35,31 +40,48 @@ public class DemandeDeChantierService
 {
     private final DemandeDeChantierMapper demandeDeChantierMapper;
     private final DemandeDeChantierRepository demandeDeChantierRepository;
+    private final SiteRepository siteRepository;
+    private final ClientRepository clientRepository;
     private final SequenceGeneratorService sequenceGenerator;
 
     public DemandeDeChantierService(DemandeDeChantierMapper demandeDeChantierMapper,
-            DemandeDeChantierRepository demandeDeChantierRepository, SequenceGeneratorService sequenceGenerator)
+            DemandeDeChantierRepository demandeDeChantierRepository, SiteRepository siteRepository,
+            ClientRepository clientRepository, SequenceGeneratorService sequenceGenerator)
     {
         super();
         this.demandeDeChantierMapper = demandeDeChantierMapper;
         this.demandeDeChantierRepository = demandeDeChantierRepository;
+        this.siteRepository = siteRepository;
+        this.clientRepository = clientRepository;
         this.sequenceGenerator = sequenceGenerator;
     }
 
-    public DemandeDeChantierDTO getDemandeDeChantierById(long id)
+    public DemandeDeChantierGetDTO getDemandeDeChantierById(long id)
     {
         Optional<DemandeDeChantier> demandeDeChantier = this.demandeDeChantierRepository.findById(id);
 
         if (demandeDeChantier.isPresent())
         {
-            return this.demandeDeChantierMapper.toDemandeDeChantierDTO(demandeDeChantier.get());
+            return this.demandeDeChantierMapper.toDemandeDeChantierGetDTO(demandeDeChantier.get());
         }
-        return new DemandeDeChantierDTO();
+        return new DemandeDeChantierGetDTO();
     }
 
     public long addDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO)
     {
         DemandeDeChantier demandeDeChantier = this.demandeDeChantierMapper.toDemandeDeChantier(demandeDeChantierDTO);
+        Optional<Site> site = this.siteRepository.findById(demandeDeChantierDTO.getSiteId());
+        Optional<Client> client = this.clientRepository.findById(demandeDeChantierDTO.getClientId());
+
+        if (client.isPresent())
+        {
+            demandeDeChantier.setClient(client.get());
+        }
+
+        if (site.isPresent())
+        {
+            demandeDeChantier.setSite(site.get());
+        }
         demandeDeChantier.setId(sequenceGenerator.generateSequence(DemandeDeChantier.SEQUENCE_NAME));
         return this.demandeDeChantierRepository.save(demandeDeChantier).getId();
     }

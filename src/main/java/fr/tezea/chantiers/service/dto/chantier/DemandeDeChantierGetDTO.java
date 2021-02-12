@@ -21,27 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.chantier;
+package fr.tezea.chantiers.service.dto.chantier;
 
-import fr.tezea.chantiers.domain.client.Client;
-import fr.tezea.chantiers.domain.site.Site;
+import fr.tezea.chantiers.service.dto.client.ClientDTO;
+import fr.tezea.chantiers.service.dto.site.SiteDTO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
-@Document
-public class DemandeDeChantier
+public class DemandeDeChantierGetDTO
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "demandedechantier_sequence";
-    @Id
     private long id;
-    private Site site;
-    private Client client;
+    private SiteDTO site;
+    private ClientDTO client;
     private int nombreEmployes;
     private String material;
     private String adresse;

@@ -23,17 +23,15 @@
  */
 package fr.tezea.chantiers.service.dto.chantier;
 
-import fr.tezea.chantiers.service.dto.client.ClientDTO;
-import fr.tezea.chantiers.service.dto.site.SiteDTO;
 import lombok.Data;
 
 @Data
 public class DemandeDeChantierDTO
 {
     private long id;
-    private SiteDTO site;
-    private ClientDTO client;
-    private String employee;
+    private long siteId;
+    private long clientId;
+    private int nombreEmployes;
     private String material;
     private String adresse;
     private String regularite;
