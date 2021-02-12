@@ -23,9 +23,66 @@
  */
 package fr.tezea.chantiers.service;
 
+import fr.tezea.chantiers.domain.client.Client;
+import fr.tezea.chantiers.repository.client.ClientRepository;
+import fr.tezea.chantiers.service.dto.client.ClientDTO;
+import fr.tezea.chantiers.service.mapper.client.ClientMapper;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ClientService
 {
+    private final ClientMapper clientMapper;
+    private final ClientRepository clientRepository;
+    private final SequenceGeneratorService sequenceGenerator;
+
+    public ClientService(ClientMapper clientMapper, ClientRepository clientRepository,
+            SequenceGeneratorService sequenceGenerator)
+    {
+        super();
+        this.clientMapper = clientMapper;
+        this.clientRepository = clientRepository;
+        this.sequenceGenerator = sequenceGenerator;
+    }
+
+    public ClientDTO getClientById(long id)
+    {
+        Optional<Client> client = this.clientRepository.findById(id);
+
+        if (client.isPresent())
+        {
+            return this.clientMapper.toClientDTO(client.get());
+        }
+        return new ClientDTO();
+    }
+
+    public long addClient(ClientDTO clientDTO)
+    {
+        Client client = this.clientMapper.toClient(clientDTO);
+        client.setId(sequenceGenerator.generateSequence(Client.SEQUENCE_NAME));
+        return this.clientRepository.save(client).getId();
+    }
+
+    public ClientDTO updateClientById(long id, ClientDTO clientDTO)
+    {
+        Optional<Client> client = this.clientRepository.findById(id);
+
+        if (client.isPresent())
+        {
+            return this.clientMapper
+                    .toClientDTO(clientRepository.save(this.clientMapper.updateClientFromDTO(clientDTO, client.get())));
+        }
+        return new ClientDTO();
+    }
+
+    public void deleteClientById(long id)
+    {
+        Optional<Client> client = this.clientRepository.findById(id);
+
+        if (client.isPresent())
+        {
+            this.clientRepository.deleteById(id);
+        }
+    }
 }

@@ -23,9 +23,66 @@
  */
 package fr.tezea.chantiers.service;
 
+import fr.tezea.chantiers.domain.chantier.Probleme;
+import fr.tezea.chantiers.repository.chantier.ProblemeRepository;
+import fr.tezea.chantiers.service.dto.chantier.ProblemeDTO;
+import fr.tezea.chantiers.service.mapper.chantier.ProblemeMapper;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProblemeService
 {
+    private final ProblemeMapper problemeMapper;
+    private final ProblemeRepository problemeRepository;
+    private final SequenceGeneratorService sequenceGenerator;
+
+    public ProblemeService(ProblemeMapper problemeMapper, ProblemeRepository problemeRepository,
+            SequenceGeneratorService sequenceGenerator)
+    {
+        super();
+        this.problemeMapper = problemeMapper;
+        this.problemeRepository = problemeRepository;
+        this.sequenceGenerator = sequenceGenerator;
+    }
+
+    public ProblemeDTO getProblemeById(long id)
+    {
+        Optional<Probleme> probleme = this.problemeRepository.findById(id);
+
+        if (probleme.isPresent())
+        {
+            return this.problemeMapper.toProblemeDTO(probleme.get());
+        }
+        return new ProblemeDTO();
+    }
+
+    public long addProbleme(ProblemeDTO problemeDTO)
+    {
+        Probleme probleme = this.problemeMapper.toProbleme(problemeDTO);
+        probleme.setId(sequenceGenerator.generateSequence(Probleme.SEQUENCE_NAME));
+        return this.problemeRepository.save(probleme).getId();
+    }
+
+    public ProblemeDTO updateProblemeById(long id, ProblemeDTO problemeDTO)
+    {
+        Optional<Probleme> probleme = this.problemeRepository.findById(id);
+
+        if (probleme.isPresent())
+        {
+            return this.problemeMapper.toProblemeDTO(
+                    problemeRepository.save(this.problemeMapper.updateProblemeFromDTO(problemeDTO, probleme.get())));
+        }
+        return new ProblemeDTO();
+    }
+
+    public void deleteProblemeById(long id)
+    {
+        Optional<Probleme> probleme = this.problemeRepository.findById(id);
+
+        if (probleme.isPresent())
+        {
+            this.problemeRepository.deleteById(id);
+        }
+    }
 }

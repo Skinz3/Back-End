@@ -23,9 +23,66 @@
  */
 package fr.tezea.chantiers.service;
 
+import fr.tezea.chantiers.domain.chantier.Chantier;
+import fr.tezea.chantiers.repository.chantier.ChantierRepository;
+import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
+import fr.tezea.chantiers.service.mapper.chantier.ChantierMapper;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChantierService
 {
+    private final ChantierMapper chantierMapper;
+    private final ChantierRepository chantierRepository;
+    private final SequenceGeneratorService sequenceGenerator;
+
+    public ChantierService(ChantierMapper chantierMapper, ChantierRepository chantierRepository,
+            SequenceGeneratorService sequenceGenerator)
+    {
+        super();
+        this.chantierMapper = chantierMapper;
+        this.chantierRepository = chantierRepository;
+        this.sequenceGenerator = sequenceGenerator;
+    }
+
+    public ChantierDTO getChantierById(long id)
+    {
+        Optional<Chantier> chantier = this.chantierRepository.findById(id);
+
+        if (chantier.isPresent())
+        {
+            return this.chantierMapper.toChantierDTO(chantier.get());
+        }
+        return new ChantierDTO();
+    }
+
+    public long addChantier(ChantierDTO chantierDTO)
+    {
+        Chantier chantier = this.chantierMapper.toChantier(chantierDTO);
+        chantier.setId(sequenceGenerator.generateSequence(Chantier.SEQUENCE_NAME));
+        return this.chantierRepository.save(chantier).getId();
+    }
+
+    public ChantierDTO updateChantierById(long id, ChantierDTO chantierDTO)
+    {
+        Optional<Chantier> chantier = this.chantierRepository.findById(id);
+
+        if (chantier.isPresent())
+        {
+            return this.chantierMapper.toChantierDTO(
+                    chantierRepository.save(this.chantierMapper.updateChantierFromDTO(chantierDTO, chantier.get())));
+        }
+        return new ChantierDTO();
+    }
+
+    public void deleteChantierById(long id)
+    {
+        Optional<Chantier> chantier = this.chantierRepository.findById(id);
+
+        if (chantier.isPresent())
+        {
+            this.chantierRepository.deleteById(id);
+        }
+    }
 }

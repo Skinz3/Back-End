@@ -23,9 +23,67 @@
  */
 package fr.tezea.chantiers.service;
 
+import fr.tezea.chantiers.domain.chantier.DemandeDeChantier;
+import fr.tezea.chantiers.repository.chantier.DemandeDeChantierRepository;
+import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
+import fr.tezea.chantiers.service.mapper.chantier.DemandeDeChantierMapper;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DemandeDeChantierService
 {
+    private final DemandeDeChantierMapper demandeDeChantierMapper;
+    private final DemandeDeChantierRepository demandeDeChantierRepository;
+    private final SequenceGeneratorService sequenceGenerator;
+
+    public DemandeDeChantierService(DemandeDeChantierMapper demandeDeChantierMapper,
+            DemandeDeChantierRepository demandeDeChantierRepository, SequenceGeneratorService sequenceGenerator)
+    {
+        super();
+        this.demandeDeChantierMapper = demandeDeChantierMapper;
+        this.demandeDeChantierRepository = demandeDeChantierRepository;
+        this.sequenceGenerator = sequenceGenerator;
+    }
+
+    public DemandeDeChantierDTO getDemandeDeChantierById(long id)
+    {
+        Optional<DemandeDeChantier> demandeDeChantier = this.demandeDeChantierRepository.findById(id);
+
+        if (demandeDeChantier.isPresent())
+        {
+            return this.demandeDeChantierMapper.toDemandeDeChantierDTO(demandeDeChantier.get());
+        }
+        return new DemandeDeChantierDTO();
+    }
+
+    public long addDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO)
+    {
+        DemandeDeChantier demandeDeChantier = this.demandeDeChantierMapper.toDemandeDeChantier(demandeDeChantierDTO);
+        demandeDeChantier.setId(sequenceGenerator.generateSequence(DemandeDeChantier.SEQUENCE_NAME));
+        return this.demandeDeChantierRepository.save(demandeDeChantier).getId();
+    }
+
+    public DemandeDeChantierDTO updateDemandeDeChantierById(long id, DemandeDeChantierDTO demandeDeChantierDTO)
+    {
+        Optional<DemandeDeChantier> demandeDeChantier = this.demandeDeChantierRepository.findById(id);
+
+        if (demandeDeChantier.isPresent())
+        {
+            return this.demandeDeChantierMapper
+                    .toDemandeDeChantierDTO(demandeDeChantierRepository.save(this.demandeDeChantierMapper
+                            .updateDemandeDeChantierFromDTO(demandeDeChantierDTO, demandeDeChantier.get())));
+        }
+        return new DemandeDeChantierDTO();
+    }
+
+    public void deleteDemandeDeChantierById(long id)
+    {
+        Optional<DemandeDeChantier> demandeDeChantier = this.demandeDeChantierRepository.findById(id);
+
+        if (demandeDeChantier.isPresent())
+        {
+            this.demandeDeChantierRepository.deleteById(id);
+        }
+    }
 }

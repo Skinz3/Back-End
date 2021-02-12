@@ -23,9 +23,66 @@
  */
 package fr.tezea.chantiers.service;
 
+import fr.tezea.chantiers.domain.chantier.Media;
+import fr.tezea.chantiers.repository.chantier.DocumentRepository;
+import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
+import fr.tezea.chantiers.service.mapper.chantier.MediaMapper;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MediaService
 {
+    private final MediaMapper mediaMapper;
+    private final DocumentRepository mediaRepository;
+    private final SequenceGeneratorService sequenceGenerator;
+
+    public MediaService(MediaMapper mediaMapper, DocumentRepository mediaRepository,
+            SequenceGeneratorService sequenceGenerator)
+    {
+        super();
+        this.mediaMapper = mediaMapper;
+        this.mediaRepository = mediaRepository;
+        this.sequenceGenerator = sequenceGenerator;
+    }
+
+    public MediaDTO getMediaById(long id)
+    {
+        Optional<Media> media = this.mediaRepository.findById(id);
+
+        if (media.isPresent())
+        {
+            return this.mediaMapper.toMediaDTO(media.get());
+        }
+        return new MediaDTO();
+    }
+
+    public long addMedia(MediaDTO mediaDTO)
+    {
+        Media media = this.mediaMapper.toMedia(mediaDTO);
+        media.setId(sequenceGenerator.generateSequence(Media.SEQUENCE_NAME));
+        return this.mediaRepository.save(media).getId();
+    }
+
+    public MediaDTO updateMediaById(long id, MediaDTO mediaDTO)
+    {
+        Optional<Media> media = this.mediaRepository.findById(id);
+
+        if (media.isPresent())
+        {
+            return this.mediaMapper
+                    .toMediaDTO(mediaRepository.save(this.mediaMapper.updateMediaFromDTO(mediaDTO, media.get())));
+        }
+        return new MediaDTO();
+    }
+
+    public void deleteMediaById(long id)
+    {
+        Optional<Media> media = this.mediaRepository.findById(id);
+
+        if (media.isPresent())
+        {
+            this.mediaRepository.deleteById(id);
+        }
+    }
 }

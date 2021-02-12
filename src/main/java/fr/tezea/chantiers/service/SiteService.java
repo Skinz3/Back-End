@@ -23,9 +23,68 @@
  */
 package fr.tezea.chantiers.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
+
+import fr.tezea.chantiers.domain.site.Site;
+import fr.tezea.chantiers.repository.site.SiteRepository;
+import fr.tezea.chantiers.service.dto.site.SiteDTO;
+import fr.tezea.chantiers.service.mapper.site.SiteMapper;
 
 @Service
 public class SiteService
 {
+	private final SiteMapper siteMapper;
+	private final SiteRepository siteRepository;
+	private final SequenceGeneratorService sequenceGenerator;
+
+
+	public SiteService(SiteMapper siteMapper, SiteRepository siteRepository,
+			SequenceGeneratorService sequenceGenerator) {
+		super();
+		this.siteMapper = siteMapper;
+		this.siteRepository = siteRepository;
+		this.sequenceGenerator = sequenceGenerator;
+	}
+
+	public SiteDTO getSiteById(long id)
+	{
+		Optional<Site> site = this.siteRepository.findById(id);
+
+		if (site.isPresent())
+		{
+			return this.siteMapper.toSiteDTO(site.get());
+		}
+		return new SiteDTO();
+	}
+
+	public long addSite(SiteDTO siteDTO)
+	{
+		Site site = this.siteMapper.toSite(siteDTO);
+		site.setId(sequenceGenerator.generateSequence(Site.SEQUENCE_NAME));
+		return this.siteRepository.save(site).getId();
+	}
+
+	public SiteDTO updateSiteById(long id, SiteDTO siteDTO)
+	{
+		Optional<Site> site = this.siteRepository.findById(id);
+
+		if (site.isPresent())
+		{
+			return this.siteMapper.toSiteDTO(
+					siteRepository.save(this.siteMapper.updateSiteFromDTO(siteDTO, site.get())));
+		}
+		return new SiteDTO();
+	}
+
+	public void deleteSiteById(long id)
+	{
+		Optional<Site> site = this.siteRepository.findById(id);
+
+		if (site.isPresent())
+		{
+			this.siteRepository.deleteById(id);
+		}
+	}
 }
