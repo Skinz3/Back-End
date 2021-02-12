@@ -23,10 +23,50 @@
  */
 package fr.tezea.chantiers.rest.api.site.impl;
 
-import fr.tezea.chantiers.rest.api.client.api.ClientResourceV1;
+import fr.tezea.chantiers.rest.api.site.api.SiteResourceV1;
+import fr.tezea.chantiers.service.SiteService;
+import fr.tezea.chantiers.service.dto.site.SiteDTO;
+import java.net.URI;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SiteResourceImplV1 implements ClientResourceV1
+public class SiteResourceImplV1 implements SiteResourceV1
 {
+    private final SiteService siteService;
+
+    public SiteResourceImplV1(SiteService siteService)
+    {
+        super();
+        this.siteService = siteService;
+    }
+
+    @Override
+    public ResponseEntity<SiteDTO> getSiteById(@PathVariable("id") long id)
+    {
+        return ResponseEntity.ok(this.siteService.getSiteById(id));
+    }
+
+    @Override
+    public ResponseEntity<URI> addSite(@RequestBody SiteDTO siteDTO)
+    {
+        URI location = URI.create(String.format("/get/%s", this.siteService.addSite(siteDTO)));
+        return ResponseEntity.created(location).build();
+    }
+
+    @Override
+    public ResponseEntity<SiteDTO> updateSiteById(@PathVariable("id") long id, @RequestBody SiteDTO siteDTO)
+    {
+        return ResponseEntity.ok(this.siteService.updateSiteById(id, siteDTO));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteSiteById(@PathVariable("id") long id)
+    {
+        this.siteService.deleteSiteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
