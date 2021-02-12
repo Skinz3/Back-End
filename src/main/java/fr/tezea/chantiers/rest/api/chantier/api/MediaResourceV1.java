@@ -23,9 +23,34 @@
  */
 package fr.tezea.chantiers.rest.api.chantier.api;
 
+import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
+import java.net.URI;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/api/v1/media")
 public interface MediaResourceV1
 {
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public ResponseEntity<MediaDTO> getMediaById(@PathVariable("id") long id);
+
+    @PostMapping("/add")
+    @ResponseBody
+    public ResponseEntity<URI> addMedia(@RequestBody MediaDTO mediaDTO);
+
+    @PutMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity<MediaDTO> updateMediaById(@PathVariable("id") long id, @RequestBody MediaDTO mediaDTO);
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteMediaById(@PathVariable("id") long id);
 }

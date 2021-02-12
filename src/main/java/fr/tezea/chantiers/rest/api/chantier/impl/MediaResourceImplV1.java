@@ -24,9 +24,49 @@
 package fr.tezea.chantiers.rest.api.chantier.impl;
 
 import fr.tezea.chantiers.rest.api.chantier.api.MediaResourceV1;
+import fr.tezea.chantiers.service.MediaService;
+import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
+import java.net.URI;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MediaResourceImplV1 implements MediaResourceV1
 {
+    private final MediaService mediaService;
+
+    public MediaResourceImplV1(MediaService mediaService)
+    {
+        super();
+        this.mediaService = mediaService;
+    }
+
+    @Override
+    public ResponseEntity<MediaDTO> getMediaById(@PathVariable("id") long id)
+    {
+        return ResponseEntity.ok(this.mediaService.getMediaById(id));
+    }
+
+    @Override
+    public ResponseEntity<URI> addMedia(@RequestBody MediaDTO mediaDTO)
+    {
+        URI location = URI.create(String.format("/get/%s", this.mediaService.addMedia(mediaDTO)));
+        return ResponseEntity.created(location).build();
+    }
+
+    @Override
+    public ResponseEntity<MediaDTO> updateMediaById(@PathVariable("id") long id, @RequestBody MediaDTO mediaDTO)
+    {
+        return ResponseEntity.ok(this.mediaService.updateMediaById(id, mediaDTO));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteMediaById(@PathVariable("id") long id)
+    {
+        this.mediaService.deleteMediaById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -23,9 +23,35 @@
  */
 package fr.tezea.chantiers.rest.api.chantier.api;
 
+import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
+import java.net.URI;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/api/v1/chantier")
 public interface ChantierResourceV1
 {
+    @GetMapping("/get/{id}")
+    @ResponseBody
+    public ResponseEntity<ChantierDTO> getChantierById(@PathVariable("id") long id);
+
+    @PostMapping("/add")
+    @ResponseBody
+    public ResponseEntity<URI> addChantier(@RequestBody ChantierDTO chantierDTO);
+
+    @PutMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity<ChantierDTO> updateChantierById(@PathVariable("id") long id,
+            @RequestBody ChantierDTO chantierDTO);
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteChantierById(@PathVariable("id") long id);
 }

@@ -24,9 +24,50 @@
 package fr.tezea.chantiers.rest.api.chantier.impl;
 
 import fr.tezea.chantiers.rest.api.chantier.api.ProblemeResourceV1;
+import fr.tezea.chantiers.service.ProblemeService;
+import fr.tezea.chantiers.service.dto.chantier.ProblemeDTO;
+import java.net.URI;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProblemeResourceImplV1 implements ProblemeResourceV1
 {
+    private final ProblemeService problemeService;
+
+    public ProblemeResourceImplV1(ProblemeService problemeService)
+    {
+        super();
+        this.problemeService = problemeService;
+    }
+
+    @Override
+    public ResponseEntity<ProblemeDTO> getProblemeById(@PathVariable("id") long id)
+    {
+        return ResponseEntity.ok(this.problemeService.getProblemeById(id));
+    }
+
+    @Override
+    public ResponseEntity<URI> addProbleme(@RequestBody ProblemeDTO problemeDTO)
+    {
+        URI location = URI.create(String.format("/get/%s", this.problemeService.addProbleme(problemeDTO)));
+        return ResponseEntity.created(location).build();
+    }
+
+    @Override
+    public ResponseEntity<ProblemeDTO> updateProblemeById(@PathVariable("id") long id,
+            @RequestBody ProblemeDTO problemeDTO)
+    {
+        return ResponseEntity.ok(this.problemeService.updateProblemeById(id, problemeDTO));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteProblemeById(@PathVariable("id") long id)
+    {
+        this.problemeService.deleteProblemeById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

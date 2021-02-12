@@ -24,9 +24,51 @@
 package fr.tezea.chantiers.rest.api.chantier.impl;
 
 import fr.tezea.chantiers.rest.api.chantier.api.DemandeDeChantierResourceV1;
+import fr.tezea.chantiers.service.DemandeDeChantierService;
+import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
+import java.net.URI;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DemandeDeChantierImplV1 implements DemandeDeChantierResourceV1
 {
+    private final DemandeDeChantierService demandeDeChantierService;
+
+    public DemandeDeChantierImplV1(DemandeDeChantierService demandeDeChantierService)
+    {
+        super();
+        this.demandeDeChantierService = demandeDeChantierService;
+    }
+
+    @Override
+    public ResponseEntity<DemandeDeChantierDTO> getDemandeDeChantierById(@PathVariable("id") long id)
+    {
+        return ResponseEntity.ok(this.demandeDeChantierService.getDemandeDeChantierById(id));
+    }
+
+    @Override
+    public ResponseEntity<URI> addDemandeDeChantier(@RequestBody DemandeDeChantierDTO demandeDeChantierDTO)
+    {
+        URI location = URI.create(
+                String.format("/get/%s", this.demandeDeChantierService.addDemandeDeChantier(demandeDeChantierDTO)));
+        return ResponseEntity.created(location).build();
+    }
+
+    @Override
+    public ResponseEntity<DemandeDeChantierDTO> updateDemandeDeChantierById(@PathVariable("id") long id,
+            @RequestBody DemandeDeChantierDTO demandeDeChantierDTO)
+    {
+        return ResponseEntity.ok(this.demandeDeChantierService.updateDemandeDeChantierById(id, demandeDeChantierDTO));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteDemandeDeChantierById(@PathVariable("id") long id)
+    {
+        this.demandeDeChantierService.deleteDemandeDeChantierById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
