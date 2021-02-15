@@ -92,6 +92,19 @@ public class DemandeDeChantierService
 
         if (demandeDeChantier.isPresent())
         {
+            DemandeDeChantier demandeDeChantierTmp = demandeDeChantier.get();
+            Optional<Site> site = this.siteRepository.findById(demandeDeChantierDTO.getSiteId());
+            Optional<Client> client = this.clientRepository.findById(demandeDeChantierDTO.getClientId());
+
+            if (client.isPresent() && demandeDeChantierDTO.getClientId() != demandeDeChantierTmp.getClient().getId())
+            {
+                demandeDeChantierTmp.setClient(client.get());
+            }
+
+            if (site.isPresent() && demandeDeChantierDTO.getSiteId() != demandeDeChantierTmp.getSite().getId())
+            {
+                demandeDeChantierTmp.setSite(site.get());
+            }
             return this.demandeDeChantierMapper
                     .toDemandeDeChantierDTO(demandeDeChantierRepository.save(this.demandeDeChantierMapper
                             .updateDemandeDeChantierFromDTO(demandeDeChantierDTO, demandeDeChantier.get())));
