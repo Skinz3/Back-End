@@ -57,7 +57,4 @@ public interface ChantierResourceV1
     @ResponseBody
     public ResponseEntity<Void> deleteChantierById(@PathVariable("id") long id);
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthentication(
-            @RequestBody AuthenticationRequest authenticationRequest) /* throws Exception */;
 }

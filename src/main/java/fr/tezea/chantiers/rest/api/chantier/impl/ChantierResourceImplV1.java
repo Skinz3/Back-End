@@ -44,12 +44,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChantierResourceImplV1 implements ChantierResourceV1
 {
-    @Autowired
-    private MyUserDetailsService userDetailsService;
-    @Autowired
-    private JwtUtil jwtTokenUtil;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    
     private final ChantierService chantierService;
 
     public ChantierResourceImplV1(ChantierService chantierService)
@@ -83,15 +78,5 @@ public class ChantierResourceImplV1 implements ChantierResourceV1
     {
         this.chantierService.deleteChantierById(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<?> createAuthentication(@RequestBody AuthenticationRequest authenticationRequest)
-    {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-                authenticationRequest.getPassword()));
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 }
