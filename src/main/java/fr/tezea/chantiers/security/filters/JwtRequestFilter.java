@@ -14,7 +14,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import fr.tezea.chantiers.security.services.MyUserDetailsService;
+import fr.tezea.chantiers.security.util.JwtUtil;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{
@@ -37,7 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 			username = jwtUtil.extractUsername(jwt);
 		}
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.userDetailsService.loadUserByName(username);
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 			if(jwtUtil.validateToken(jwt,userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthentificationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
