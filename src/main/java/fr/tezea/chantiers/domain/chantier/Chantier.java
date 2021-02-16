@@ -26,15 +26,14 @@ package fr.tezea.chantiers.domain.chantier;
 import fr.tezea.chantiers.domain.client.Client;
 import fr.tezea.chantiers.domain.site.Site;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @Document
 public class Chantier
 {
@@ -44,10 +43,10 @@ public class Chantier
     private long id;
     private Site site;
     private Client client;
-    private List<Probleme> problemes;
-    private List<Media> medias;
+    private Set<Probleme> problemes;
+    private Set<Media> medias;
     private String adresse;
-    private List<String> ouvriers;
+    private Set<String> ouvriers;
     private String materiel;
     private Date dateDebut;
     private Date dateFin;
@@ -58,4 +57,11 @@ public class Chantier
     private String nomChantier;
     private String informationsInterne;
     private String description;
+
+    public Chantier()
+    {
+        this.problemes = new HashSet<>();
+        this.medias = new HashSet<>();
+        this.ouvriers = new HashSet<>();
+    }
 }

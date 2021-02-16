@@ -24,15 +24,14 @@
 package fr.tezea.chantiers.domain.chantier;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @Document
 public class Probleme
 {
@@ -41,6 +40,11 @@ public class Probleme
     @Id
     private long id;
     private String description;
-    private List<String> imagesURL;
+    private Set<String> imagesURL;
     private Date date;
+
+    public Probleme()
+    {
+        this.imagesURL = new HashSet<>();
+    }
 }

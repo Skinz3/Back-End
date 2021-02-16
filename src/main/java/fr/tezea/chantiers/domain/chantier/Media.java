@@ -23,15 +23,14 @@
  */
 package fr.tezea.chantiers.domain.chantier;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @Document
 public class Media
 {
@@ -40,6 +39,11 @@ public class Media
     @Id
     private long id;
     private String nomMedia;
-    private List<String> imagesURL;
+    private Set<String> imagesURL;
     private MediaType mediaType;
+
+    public Media()
+    {
+        this.imagesURL = new HashSet<>();
+    }
 }

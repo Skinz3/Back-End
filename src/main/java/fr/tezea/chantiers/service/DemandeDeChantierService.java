@@ -24,8 +24,6 @@
 package fr.tezea.chantiers.service;
 
 import fr.tezea.chantiers.domain.chantier.DemandeDeChantier;
-import fr.tezea.chantiers.domain.client.Client;
-import fr.tezea.chantiers.domain.site.Site;
 import fr.tezea.chantiers.repository.chantier.DemandeDeChantierRepository;
 import fr.tezea.chantiers.repository.client.ClientRepository;
 import fr.tezea.chantiers.repository.site.SiteRepository;
@@ -69,19 +67,8 @@ public class DemandeDeChantierService
 
     public long addDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO)
     {
-        DemandeDeChantier demandeDeChantier = this.demandeDeChantierMapper.toDemandeDeChantier(demandeDeChantierDTO);
-        Optional<Site> site = this.siteRepository.findById(demandeDeChantierDTO.getSiteId());
-        Optional<Client> client = this.clientRepository.findById(demandeDeChantierDTO.getClientId());
-
-        if (client.isPresent())
-        {
-            demandeDeChantier.setClient(client.get());
-        }
-
-        if (site.isPresent())
-        {
-            demandeDeChantier.setSite(site.get());
-        }
+        DemandeDeChantier demandeDeChantier = this.demandeDeChantierMapper.toDemandeDeChantier(demandeDeChantierDTO,
+                this.clientRepository, this.siteRepository);
         demandeDeChantier.setId(sequenceGenerator.generateSequence(DemandeDeChantier.SEQUENCE_NAME));
         return this.demandeDeChantierRepository.save(demandeDeChantier).getId();
     }
@@ -92,22 +79,9 @@ public class DemandeDeChantierService
 
         if (demandeDeChantier.isPresent())
         {
-            DemandeDeChantier demandeDeChantierTmp = demandeDeChantier.get();
-            Optional<Site> site = this.siteRepository.findById(demandeDeChantierDTO.getSiteId());
-            Optional<Client> client = this.clientRepository.findById(demandeDeChantierDTO.getClientId());
-
-            if (client.isPresent() && demandeDeChantierDTO.getClientId() != demandeDeChantierTmp.getClient().getId())
-            {
-                demandeDeChantierTmp.setClient(client.get());
-            }
-
-            if (site.isPresent() && demandeDeChantierDTO.getSiteId() != demandeDeChantierTmp.getSite().getId())
-            {
-                demandeDeChantierTmp.setSite(site.get());
-            }
-            return this.demandeDeChantierMapper
-                    .toDemandeDeChantierDTO(demandeDeChantierRepository.save(this.demandeDeChantierMapper
-                            .updateDemandeDeChantierFromDTO(demandeDeChantierDTO, demandeDeChantier.get())));
+            return this.demandeDeChantierMapper.toDemandeDeChantierDTO(demandeDeChantierRepository
+                    .save(this.demandeDeChantierMapper.updateDemandeDeChantierFromDTO(demandeDeChantierDTO,
+                            demandeDeChantier.get(), this.clientRepository, this.siteRepository)));
         }
         return new DemandeDeChantierDTO();
     }

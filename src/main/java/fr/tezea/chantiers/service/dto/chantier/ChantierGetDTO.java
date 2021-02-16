@@ -23,15 +23,31 @@
  */
 package fr.tezea.chantiers.service.dto.chantier;
 
-import fr.tezea.chantiers.domain.chantier.MediaType;
+import fr.tezea.chantiers.domain.chantier.StatusType;
+import fr.tezea.chantiers.service.dto.client.ClientDTO;
+import fr.tezea.chantiers.service.dto.site.SiteDTO;
+import java.util.Date;
 import java.util.Set;
 import lombok.Data;
 
 @Data
-public class MediaDTO
+public class ChantierGetDTO
 {
     private long id;
-    private String nomMedia;
-    private Set<String> imagesURL;
-    private MediaType mediaType;
+    private SiteDTO site;
+    private ClientDTO client;
+    private Set<ProblemeDTO> problemes;
+    private Set<MediaDTO> medias;
+    private String adresse;
+    private Set<String> ouvriers;
+    private String materiel;
+    private Date dateDebut;
+    private Date dateFin;
+    private Date heureDemarrage;
+    private int estimationTemps;
+    private String telephone;
+    private StatusType statusChantier;
+    private String nomChantier;
+    private String informationsInterne;
+    private String description;
 }

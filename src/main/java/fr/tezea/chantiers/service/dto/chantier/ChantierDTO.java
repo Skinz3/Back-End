@@ -24,22 +24,20 @@
 package fr.tezea.chantiers.service.dto.chantier;
 
 import fr.tezea.chantiers.domain.chantier.StatusType;
-import fr.tezea.chantiers.service.dto.client.ClientDTO;
-import fr.tezea.chantiers.service.dto.site.SiteDTO;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import lombok.Data;
 
 @Data
 public class ChantierDTO
 {
     private long id;
-    private SiteDTO site;
-    private ClientDTO client;
-    private List<ProblemeDTO> problemes;
-    private List<MediaDTO> medias;
+    private long siteId;
+    private long clientId;
+    private Set<Long> problemeIds;
+    private Set<Long> mediaIds;
     private String adresse;
-    private List<String> ouvriers;
+    private Set<String> ouvriers;
     private String materiel;
     private Date dateDebut;
     private Date dateFin;
