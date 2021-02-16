@@ -42,7 +42,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
 {
     @Autowired
     private MyUserDetailsService userDetailsService;
-    
     @Autowired
     private JwtRequestFilter filter;
 
@@ -55,9 +54,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.csrf().disable().authorizeRequests().antMatchers("/authentification").permitAll().anyRequest()
-                .authenticated()
-                .and().sessionManagement()
+        http.csrf().disable().authorizeRequests().antMatchers("/api/v1/authentification/authentifier").permitAll()
+                .anyRequest().authenticated().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -66,7 +64,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception
     {
-        
         return super.authenticationManagerBean();
     }
 

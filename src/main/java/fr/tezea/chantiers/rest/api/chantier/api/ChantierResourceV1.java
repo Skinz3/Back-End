@@ -23,7 +23,6 @@
  */
 package fr.tezea.chantiers.rest.api.chantier.api;
 
-import fr.tezea.chantiers.security.models.AuthenticationRequest;
 import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/api/v1/chantier")
@@ -56,5 +54,4 @@ public interface ChantierResourceV1
     @DeleteMapping("/delete/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteChantierById(@PathVariable("id") long id);
-
 }

@@ -24,19 +24,11 @@
 package fr.tezea.chantiers.rest.api.chantier.impl;
 
 import fr.tezea.chantiers.rest.api.chantier.api.ChantierResourceV1;
-import fr.tezea.chantiers.security.models.AuthenticationRequest;
-import fr.tezea.chantiers.security.models.AuthenticationResponse;
-import fr.tezea.chantiers.security.services.MyUserDetailsService;
-import fr.tezea.chantiers.security.util.JwtUtil;
 import fr.tezea.chantiers.service.ChantierService;
 import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
 import java.net.URI;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +36,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChantierResourceImplV1 implements ChantierResourceV1
 {
-    
     private final ChantierService chantierService;
 
     public ChantierResourceImplV1(ChantierService chantierService)

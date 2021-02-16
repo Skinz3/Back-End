@@ -23,7 +23,10 @@
  */
 package fr.tezea.chantiers.security.services;
 
+import fr.tezea.chantiers.service.UtilisateurService;
+import fr.tezea.chantiers.service.dto.user.UtilisateurDTO;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,9 +36,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUserDetailsService implements UserDetailsService
 {
+    @Autowired
+    private UtilisateurService utilisateurService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        return new User("Fred", "freddy", new ArrayList());
+        UtilisateurDTO user = utilisateurService.getUtilisateurByUsername(username);
+
+        if (user.getUsername() == null)
+        {
+            throw new UsernameNotFoundException("No " + username + " corresponding found");
+        }
+        return new User(user.getUsername(), user.getPassword(), new ArrayList());
     }
 }
