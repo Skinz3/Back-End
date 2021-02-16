@@ -23,9 +23,11 @@
  */
 package fr.tezea.chantiers.security.services;
 
-import fr.tezea.chantiers.service.UtilisateurService;
-import fr.tezea.chantiers.service.dto.user.UtilisateurDTO;
+import fr.tezea.chantiers.domain.user.Utilisateur;
+import fr.tezea.chantiers.repository.user.UtilisateurRepository;
 import java.util.ArrayList;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,17 +39,17 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailsService implements UserDetailsService
 {
     @Autowired
-    private UtilisateurService utilisateurService;
+    private UtilisateurRepository utilisateurRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        UtilisateurDTO user = utilisateurService.getUtilisateurByUsername(username);
-
-        if (user.getUsername() == null)
-        {
-            throw new UsernameNotFoundException("No " + username + " corresponding found");
-        }
+    	System.out.println("Loading user");
+        Utilisateur user = utilisateurRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        System.out.println("User : " + user.getPassword());
+        System.out.println("User chargé");
+        
+        
         return new User(user.getUsername(), user.getPassword(), new ArrayList());
     }
 }
