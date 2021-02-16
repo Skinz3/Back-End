@@ -44,11 +44,11 @@ public class MyUserDetailsService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
+    	//Exemple d'utilisateur a ajouter dans la collection "utilisateur".
+    	//{"_id":1,"username":"Juan","password":"Juan","role":"ADMINISTRATION"}
     	System.out.println("Loading user");
         Utilisateur user = utilisateurRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        System.out.println("User : " + user.getPassword());
-        System.out.println("User chargé");
-        
+        System.out.println("User : " + user.getUsername() + " loaded");
         
         return new User(user.getUsername(), user.getPassword(), new ArrayList());
     }
