@@ -26,10 +26,12 @@ package fr.tezea.chantiers.service.mapper.chantier;
 import fr.tezea.chantiers.domain.chantier.Chantier;
 import fr.tezea.chantiers.domain.chantier.Media;
 import fr.tezea.chantiers.domain.chantier.Probleme;
+import fr.tezea.chantiers.domain.chantier.RapportChantierRegulier;
 import fr.tezea.chantiers.domain.client.Client;
 import fr.tezea.chantiers.domain.site.Site;
 import fr.tezea.chantiers.repository.chantier.MediaRepository;
 import fr.tezea.chantiers.repository.chantier.ProblemeRepository;
+import fr.tezea.chantiers.repository.chantier.RapportChantierRegulierRepository;
 import fr.tezea.chantiers.repository.client.ClientRepository;
 import fr.tezea.chantiers.repository.site.SiteRepository;
 import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
@@ -50,7 +52,8 @@ import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring", uses = { ClientMapper.class, SiteMapper.class, ProblemeMapper.class,
-        MediaMapper.class }, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+        MediaMapper.class,
+        RapportChantierRegulierMapper.class }, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ChantierMapper
 {
     @Mapping(target = "id", ignore = true)
@@ -58,15 +61,18 @@ public interface ChantierMapper
     @Mapping(source = "clientId", target = "client", qualifiedByName = "clientIdToClient")
     @Mapping(source = "problemeIds", target = "problemes", qualifiedByName = "problemeIdsToProblemes")
     @Mapping(source = "mediaIds", target = "medias", qualifiedByName = "mediaIdsToMedias")
+    @Mapping(source = "rapportsRegulierIds", target = "rapportsRegulier", qualifiedByName = "rapportsRegulierIdsToRapportsRegulier")
     Chantier toChantier(ChantierDTO chantierDTO, @Context ClientRepository clientRepository,
             @Context SiteRepository siteRepository, @Context ProblemeRepository problemeRepository,
-            @Context MediaRepository mediaRepository);
+            @Context MediaRepository mediaRepository,
+            @Context RapportChantierRegulierRepository rapportChantierRegulierRepository);
 
     @InheritInverseConfiguration(name = "toChantier")
     @Mapping(source = "site.id", target = "siteId")
     @Mapping(source = "client.id", target = "clientId")
     @Mapping(source = "problemes", target = "problemeIds", qualifiedByName = "problemesToProblemeIds")
     @Mapping(source = "medias", target = "mediaIds", qualifiedByName = "mediasToMediaIds")
+    @Mapping(source = "rapportsRegulier", target = "rapportsRegulierIds", qualifiedByName = "rapportsRegulierToRapportsRegulierIds")
     ChantierDTO toChantierDTO(Chantier chantier);
 
     @Mapping(target = "id", ignore = true)
@@ -82,9 +88,11 @@ public interface ChantierMapper
     @Mapping(source = "clientId", target = "client", qualifiedByName = "clientIdToClient")
     @Mapping(source = "problemeIds", target = "problemes", qualifiedByName = "problemeIdsToProblemes")
     @Mapping(source = "mediaIds", target = "medias", qualifiedByName = "mediaIdsToMedias")
+    @Mapping(source = "rapportsRegulierIds", target = "rapportsRegulier", qualifiedByName = "rapportsRegulierIdsToRapportsRegulier")
     Chantier updateChantierFromDTO(ChantierDTO chantierDTO, @MappingTarget Chantier chantier,
             @Context ClientRepository clientRepository, @Context SiteRepository siteRepository,
-            @Context ProblemeRepository problemeRepository, @Context MediaRepository mediaRepository);
+            @Context ProblemeRepository problemeRepository, @Context MediaRepository mediaRepository,
+            @Context RapportChantierRegulierRepository rapportChantierRegulierRepository);
 
     @Named("problemesToProblemeIds")
     default Set<Long> problemesToProblemeIds(Set<Probleme> problemes)
@@ -108,6 +116,18 @@ public interface ChantierMapper
             mediaIds.add(media.getId());
         }
         return mediaIds;
+    }
+
+    @Named("rapportsRegulierToRapportsRegulierIds")
+    default Set<Long> rapportsRegulierToRapportsRegulierIds(Set<RapportChantierRegulier> rapportsRegulier)
+    {
+        Set<Long> rapportsRegulierIds = new HashSet<>();
+
+        for (RapportChantierRegulier rapportChantierRegulier : rapportsRegulier)
+        {
+            rapportsRegulierIds.add(rapportChantierRegulier.getId());
+        }
+        return rapportsRegulierIds;
     }
 
     @Named("problemeIdsToProblemes")
@@ -152,6 +172,30 @@ public interface ChantierMapper
             }
         }
         return mediaIdsTmp;
+    }
+
+    @Named("rapportsRegulierIdsToRapportsRegulier")
+    default Set<RapportChantierRegulier> rapportsRegulierIdsToRapportsRegulier(Set<Long> rapportsRegulierIds,
+            @Context RapportChantierRegulierRepository rapportChantierRegulierRepository)
+    {
+
+        if (rapportsRegulierIds == null)
+        {
+            return null;
+        }
+        Set<RapportChantierRegulier> rapportsRegulierIdsTmp = new HashSet<>();
+
+        for (long rapportsRegulierId : rapportsRegulierIds)
+        {
+            Optional<RapportChantierRegulier> rapportChantierRegulier = rapportChantierRegulierRepository
+                    .findById(rapportsRegulierId);
+
+            if (rapportChantierRegulier.isPresent())
+            {
+                rapportsRegulierIdsTmp.add(rapportChantierRegulier.get());
+            }
+        }
+        return rapportsRegulierIdsTmp;
     }
 
     @Named("clientIdToClient")

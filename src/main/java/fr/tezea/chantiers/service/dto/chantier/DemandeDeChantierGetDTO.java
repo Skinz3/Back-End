@@ -23,8 +23,11 @@
  */
 package fr.tezea.chantiers.service.dto.chantier;
 
+import fr.tezea.chantiers.domain.chantier.JourSemaineType;
 import fr.tezea.chantiers.service.dto.client.ClientDTO;
 import fr.tezea.chantiers.service.dto.site.SiteDTO;
+import java.util.Date;
+import java.util.Set;
 import lombok.Data;
 
 @Data
@@ -34,11 +37,14 @@ public class DemandeDeChantierGetDTO
     private SiteDTO site;
     private ClientDTO client;
     private int nombreEmployes;
-    private String material;
+    private String materiel;
     private String adresse;
     private String regularite;
     private int estimationTemps;
     private String particularite;
     private String description;
-    private String infoInterne;
+    private String informationsInterne;
+    private Date dateDebutRegularite;
+    private Date dateFinRegularite;
+    private Set<JourSemaineType> joursRegularite;
 }

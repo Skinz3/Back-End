@@ -21,42 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.chantier;
+package fr.tezea.chantiers.service.dto.chantier;
 
-import fr.tezea.chantiers.domain.client.Client;
-import fr.tezea.chantiers.domain.site.Site;
+import fr.tezea.chantiers.domain.chantier.StatusType;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document
-public class DemandeDeChantier
+public class RapportChantierRegulierDTO
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "demandedechantier_sequence";
-    @Id
     private long id;
-    private Site site;
-    private Client client;
-    private int nombreEmployes;
-    private String materiel;
-    private String adresse;
-    private boolean regularite;
-    private int estimationTemps;
-    private String particularite;
-    private String description;
-    private String informationsInterne;
-    private Date dateDebutRegularite;
-    private Date dateFinRegularite;
-    private Set<JourSemaineType> joursRegularite;
-
-    public DemandeDeChantier()
-    {
-        this.joursRegularite = new HashSet<>();
-    }
+    private Date dateDebutTheorique;
+    private Date dateFinTheorique;
+    private Date dateDebutEffectif;
+    private Date dateFinEffectif;
+    private StatusType status;
 }

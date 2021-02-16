@@ -27,6 +27,7 @@ import fr.tezea.chantiers.domain.chantier.Chantier;
 import fr.tezea.chantiers.repository.chantier.ChantierRepository;
 import fr.tezea.chantiers.repository.chantier.MediaRepository;
 import fr.tezea.chantiers.repository.chantier.ProblemeRepository;
+import fr.tezea.chantiers.repository.chantier.RapportChantierRegulierRepository;
 import fr.tezea.chantiers.repository.client.ClientRepository;
 import fr.tezea.chantiers.repository.site.SiteRepository;
 import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
@@ -44,12 +45,13 @@ public class ChantierService
     private final ClientRepository clientRepository;
     private final ProblemeRepository problemeRepository;
     private final MediaRepository mediaRepository;
+    private final RapportChantierRegulierRepository rapportChantierRegulierRepository;
     private final SequenceGeneratorService sequenceGenerator;
 
     public ChantierService(ChantierMapper chantierMapper, ChantierRepository chantierRepository,
             SiteRepository siteRepository, ClientRepository clientRepository,
             SequenceGeneratorService sequenceGenerator, ProblemeRepository problemeRepository,
-            MediaRepository mediaRepository)
+            MediaRepository mediaRepository, RapportChantierRegulierRepository rapportChantierRegulierRepository)
     {
         super();
         this.chantierMapper = chantierMapper;
@@ -58,6 +60,7 @@ public class ChantierService
         this.clientRepository = clientRepository;
         this.problemeRepository = problemeRepository;
         this.mediaRepository = mediaRepository;
+        this.rapportChantierRegulierRepository = rapportChantierRegulierRepository;
         this.sequenceGenerator = sequenceGenerator;
     }
 
@@ -75,7 +78,7 @@ public class ChantierService
     public long addChantier(ChantierDTO chantierDTO)
     {
         Chantier chantier = this.chantierMapper.toChantier(chantierDTO, this.clientRepository, this.siteRepository,
-                this.problemeRepository, this.mediaRepository);
+                this.problemeRepository, this.mediaRepository, this.rapportChantierRegulierRepository);
         chantier.setId(sequenceGenerator.generateSequence(Chantier.SEQUENCE_NAME));
         return this.chantierRepository.save(chantier).getId();
     }
@@ -86,9 +89,10 @@ public class ChantierService
 
         if (chantier.isPresent())
         {
-            return this.chantierMapper.toChantierDTO(chantierRepository
-                    .save(this.chantierMapper.updateChantierFromDTO(chantierDTO, chantier.get(), this.clientRepository,
-                            this.siteRepository, this.problemeRepository, this.mediaRepository)));
+            return this.chantierMapper
+                    .toChantierDTO(chantierRepository.save(this.chantierMapper.updateChantierFromDTO(chantierDTO,
+                            chantier.get(), this.clientRepository, this.siteRepository, this.problemeRepository,
+                            this.mediaRepository, rapportChantierRegulierRepository)));
         }
         return new ChantierDTO();
     }

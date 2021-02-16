@@ -23,40 +23,25 @@
  */
 package fr.tezea.chantiers.domain.chantier;
 
-import fr.tezea.chantiers.domain.client.Client;
-import fr.tezea.chantiers.domain.site.Site;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Data
-@Document
-public class DemandeDeChantier
+public enum JourSemaineType
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "demandedechantier_sequence";
-    @Id
-    private long id;
-    private Site site;
-    private Client client;
-    private int nombreEmployes;
-    private String materiel;
-    private String adresse;
-    private boolean regularite;
-    private int estimationTemps;
-    private String particularite;
-    private String description;
-    private String informationsInterne;
-    private Date dateDebutRegularite;
-    private Date dateFinRegularite;
-    private Set<JourSemaineType> joursRegularite;
+    LUNDI("Lundi"), MARDI("Mardi"), MERCREDI("Mercredi"), JEUDI("Jeudi"), VENDREDI("Vendredi"), SAMEDI("Samedi"),
+    DIMANCHE("Dimanche");
 
-    public DemandeDeChantier()
+    private final String jour;
+
+    private JourSemaineType(String jour)
     {
-        this.joursRegularite = new HashSet<>();
+        this.jour = jour;
+    }
+
+    public String getJour()
+    {
+        return this.jour;
+    }
+
+    public String getJourLowerCase()
+    {
+        return this.jour.toLowerCase();
     }
 }
