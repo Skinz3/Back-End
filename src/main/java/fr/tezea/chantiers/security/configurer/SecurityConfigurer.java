@@ -44,8 +44,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
     private MyUserDetailsService userDetailsService;
     @Autowired
     private JwtRequestFilter filter;
-
     private static final String API_VERSION = "v1";
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
@@ -55,15 +55,28 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.csrf().disable().authorizeRequests()
-        		.antMatchers("/api/"+API_VERSION+"/authentification/authentifier").permitAll()
-                .antMatchers("/api/"+API_VERSION+"/chantier/*").hasAnyRole("Administration","Telephone","Direction","Chef de site")
-                .antMatchers("/api/"+API_VERSION+"/demandedechantier/**").hasAnyRole("Administration","Telephone","Direction","Chef de site")
-                .antMatchers("/api/"+API_VERSION+"/media/**").hasAnyRole("Administration","Telephone","Direction")
-                .antMatchers("/api/"+API_VERSION+"/probleme/**").hasAnyRole("Administration","Telephone","Direction")
-                .antMatchers("/api/"+API_VERSION+"/client/**").hasAnyRole("Administration","Direction","Chef de site")
-                .antMatchers("/api/"+API_VERSION+"/media/**").hasAnyRole("Administration","Telephone","Direction","Chef de site")
-                .antMatchers("/api/"+API_VERSION+"/utilisateur/**").hasAnyRole("Administration","Direction")
+        http.csrf().disable().authorizeRequests().antMatchers("/api/" + API_VERSION + "/authentification/authentifier")
+                .permitAll().antMatchers("/api/" + API_VERSION + "/chantier/*")
+                .hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
+                .antMatchers("/api/" + API_VERSION + "/demandedechantier/**")
+                
+                .hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
+                .antMatchers("/api/" + API_VERSION + "/media/**").hasAnyRole("Administration", "Telephone", "Direction")
+                
+                .antMatchers("/api/" + API_VERSION + "/probleme/**")
+                .hasAnyRole("Administration", "Telephone", "Direction")
+                
+                .antMatchers("/api/" + API_VERSION + "/client/**")
+                .hasAnyRole("Administration", "Direction", "Chef de site")
+                
+                .antMatchers("/api/" + API_VERSION + "/media/**")
+                .hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
+                
+                .antMatchers("/api/" + API_VERSION + "/utilisateur/**").hasAnyRole("Administration", "Direction")
+                
+                .antMatchers("/api/" + API_VERSION + "/rapportchantierregulier/**")
+                .hasAnyRole("Administration", "Direction")
+                
                 .anyRequest().authenticated().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
