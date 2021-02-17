@@ -94,7 +94,7 @@ public class SiteService
 
         if (site.isPresent())
         {
-            this.siteRepository.deleteById(id);
+            this.siteRepository.delete(site.get());
         }
     }
 }

@@ -95,7 +95,7 @@ public class ClientService
 
         if (client.isPresent())
         {
-            this.clientRepository.deleteById(id);
+            this.clientRepository.delete(client.get());
         }
     }
 }

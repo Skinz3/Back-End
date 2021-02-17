@@ -95,7 +95,7 @@ public class ProblemeService
 
         if (probleme.isPresent())
         {
-            this.problemeRepository.deleteById(id);
+            this.problemeRepository.delete(probleme.get());
         }
     }
 }

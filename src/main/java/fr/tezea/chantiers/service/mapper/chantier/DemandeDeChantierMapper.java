@@ -51,7 +51,8 @@ public interface DemandeDeChantierMapper
     @Mapping(source = "siteId", target = "site", qualifiedByName = "siteIdToSite")
     @Mapping(source = "clientId", target = "client", qualifiedByName = "clientIdToClient")
     DemandeDeChantier toDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO,
-            @Context ClientRepository clientRepository, @Context SiteRepository siteRepository);
+            @Context ClientRepository clientRepository, @Context Client oldClient,
+            @Context SiteRepository siteRepository, @Context Site oldSite);
 
     @InheritInverseConfiguration(name = "toDemandeDeChantier")
     @Mapping(source = "site.id", target = "siteId")
@@ -71,10 +72,11 @@ public interface DemandeDeChantierMapper
     @Mapping(source = "clientId", target = "client", qualifiedByName = "clientIdToClient")
     DemandeDeChantier updateDemandeDeChantierFromDTO(DemandeDeChantierDTO demandeDeChantierDTO,
             @MappingTarget DemandeDeChantier demandeDeChantier, @Context ClientRepository clientRepository,
-            @Context SiteRepository siteRepository);
+            @Context Client oldClient, @Context SiteRepository siteRepository, @Context Site oldSite);
 
     @Named("clientIdToClient")
-    default Client clientIdToClient(long clientId, @Context ClientRepository clientRepository)
+    default Client clientIdToClient(long clientId, @Context ClientRepository clientRepository,
+            @Context Client oldClient)
     {
         Optional<Client> client = clientRepository.findById(clientId);
 
@@ -82,11 +84,11 @@ public interface DemandeDeChantierMapper
         {
             return client.get();
         }
-        return null;
+        return oldClient;
     }
 
     @Named("siteIdToSite")
-    default Site siteIdToSite(long siteId, @Context SiteRepository siteRepository)
+    default Site siteIdToSite(long siteId, @Context SiteRepository siteRepository, @Context Site oldSite)
     {
         Optional<Site> site = siteRepository.findById(siteId);
 
@@ -94,6 +96,6 @@ public interface DemandeDeChantierMapper
         {
             return site.get();
         }
-        return null;
+        return oldSite;
     }
 }

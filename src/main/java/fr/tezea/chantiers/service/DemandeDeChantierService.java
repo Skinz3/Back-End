@@ -81,7 +81,7 @@ public class DemandeDeChantierService
     public long addDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO)
     {
         DemandeDeChantier demandeDeChantier = this.demandeDeChantierMapper.toDemandeDeChantier(demandeDeChantierDTO,
-                this.clientRepository, this.siteRepository);
+                this.clientRepository, null, this.siteRepository, null);
         demandeDeChantier.setId(sequenceGenerator.generateSequence(DemandeDeChantier.SEQUENCE_NAME));
         return this.demandeDeChantierRepository.save(demandeDeChantier).getId();
     }
@@ -94,7 +94,8 @@ public class DemandeDeChantierService
         {
             return this.demandeDeChantierMapper.toDemandeDeChantierDTO(demandeDeChantierRepository
                     .save(this.demandeDeChantierMapper.updateDemandeDeChantierFromDTO(demandeDeChantierDTO,
-                            demandeDeChantier.get(), this.clientRepository, this.siteRepository)));
+                            demandeDeChantier.get(), this.clientRepository, demandeDeChantier.get().getClient(),
+                            this.siteRepository, demandeDeChantier.get().getSite())));
         }
         return new DemandeDeChantierDTO();
     }
@@ -105,7 +106,7 @@ public class DemandeDeChantierService
 
         if (demandeDeChantier.isPresent())
         {
-            this.demandeDeChantierRepository.deleteById(id);
+            this.demandeDeChantierRepository.delete(demandeDeChantier.get());
         }
     }
 }

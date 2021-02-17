@@ -101,7 +101,7 @@ public class RapportChantierRegulierService
 
         if (rapportChantierRegulier.isPresent())
         {
-            this.rapportChantierRegulierRepository.deleteById(id);
+            this.rapportChantierRegulierRepository.delete(rapportChantierRegulier.get());
         }
     }
 }
