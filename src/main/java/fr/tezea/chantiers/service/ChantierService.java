@@ -90,8 +90,9 @@ public class ChantierService
 
     public long addChantier(ChantierDTO chantierDTO)
     {
-        Chantier chantier = this.chantierMapper.toChantier(chantierDTO, this.clientRepository, this.siteRepository,
-                this.problemeRepository, this.mediaRepository, this.rapportChantierRegulierRepository);
+        Chantier chantier = this.chantierMapper.toChantier(chantierDTO, this.clientRepository, null,
+                this.siteRepository, null, this.problemeRepository, this.mediaRepository,
+                this.rapportChantierRegulierRepository);
         chantier.setId(sequenceGenerator.generateSequence(Chantier.SEQUENCE_NAME));
         return this.chantierRepository.save(chantier).getId();
     }
@@ -102,10 +103,10 @@ public class ChantierService
 
         if (chantier.isPresent())
         {
-            return this.chantierMapper
-                    .toChantierDTO(chantierRepository.save(this.chantierMapper.updateChantierFromDTO(chantierDTO,
-                            chantier.get(), this.clientRepository, this.siteRepository, this.problemeRepository,
-                            this.mediaRepository, rapportChantierRegulierRepository)));
+            return this.chantierMapper.toChantierDTO(chantierRepository
+                    .save(this.chantierMapper.updateChantierFromDTO(chantierDTO, chantier.get(), this.clientRepository,
+                            chantier.get().getClient(), this.siteRepository, chantier.get().getSite(),
+                            this.problemeRepository, this.mediaRepository, rapportChantierRegulierRepository)));
         }
         return new ChantierDTO();
     }
@@ -116,7 +117,7 @@ public class ChantierService
 
         if (chantier.isPresent())
         {
-            this.chantierRepository.deleteById(id);
+            this.chantierRepository.delete(chantier.get());
         }
     }
 }

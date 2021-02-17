@@ -62,9 +62,9 @@ public interface ChantierMapper
     @Mapping(source = "problemeIds", target = "problemes", qualifiedByName = "problemeIdsToProblemes")
     @Mapping(source = "mediaIds", target = "medias", qualifiedByName = "mediaIdsToMedias")
     @Mapping(source = "rapportsRegulierIds", target = "rapportsRegulier", qualifiedByName = "rapportsRegulierIdsToRapportsRegulier")
-    Chantier toChantier(ChantierDTO chantierDTO, @Context ClientRepository clientRepository,
-            @Context SiteRepository siteRepository, @Context ProblemeRepository problemeRepository,
-            @Context MediaRepository mediaRepository,
+    Chantier toChantier(ChantierDTO chantierDTO, @Context ClientRepository clientRepository, @Context Client oldClient,
+            @Context SiteRepository siteRepository, @Context Site oldSite,
+            @Context ProblemeRepository problemeRepository, @Context MediaRepository mediaRepository,
             @Context RapportChantierRegulierRepository rapportChantierRegulierRepository);
 
     @InheritInverseConfiguration(name = "toChantier")
@@ -90,7 +90,8 @@ public interface ChantierMapper
     @Mapping(source = "mediaIds", target = "medias", qualifiedByName = "mediaIdsToMedias")
     @Mapping(source = "rapportsRegulierIds", target = "rapportsRegulier", qualifiedByName = "rapportsRegulierIdsToRapportsRegulier")
     Chantier updateChantierFromDTO(ChantierDTO chantierDTO, @MappingTarget Chantier chantier,
-            @Context ClientRepository clientRepository, @Context SiteRepository siteRepository,
+            @Context ClientRepository clientRepository, @Context Client oldClient,
+            @Context SiteRepository siteRepository, @Context Site oldSite,
             @Context ProblemeRepository problemeRepository, @Context MediaRepository mediaRepository,
             @Context RapportChantierRegulierRepository rapportChantierRegulierRepository);
 
@@ -199,7 +200,8 @@ public interface ChantierMapper
     }
 
     @Named("clientIdToClient")
-    default Client clientIdToClient(long clientId, @Context ClientRepository clientRepository)
+    default Client clientIdToClient(long clientId, @Context ClientRepository clientRepository,
+            @Context Client oldClient)
     {
         Optional<Client> client = clientRepository.findById(clientId);
 
@@ -207,11 +209,11 @@ public interface ChantierMapper
         {
             return client.get();
         }
-        return null;
+        return oldClient;
     }
 
     @Named("siteIdToSite")
-    default Site siteIdToSite(long siteId, @Context SiteRepository siteRepository)
+    default Site siteIdToSite(long siteId, @Context SiteRepository siteRepository, @Context Site oldSite)
     {
         Optional<Site> site = siteRepository.findById(siteId);
 
@@ -219,6 +221,6 @@ public interface ChantierMapper
         {
             return site.get();
         }
-        return null;
+        return oldSite;
     }
 }

@@ -95,7 +95,7 @@ public class MediaService
 
         if (media.isPresent())
         {
-            this.mediaRepository.deleteById(id);
+            this.mediaRepository.delete(media.get());
         }
     }
 }
