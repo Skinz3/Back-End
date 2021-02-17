@@ -31,6 +31,7 @@ import java.util.Set;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -41,9 +42,13 @@ public class Chantier
     public static final String SEQUENCE_NAME = "chantier_sequence";
     @Id
     private long id;
+    @DBRef
     private Site site;
+    @DBRef
     private Client client;
+    @DBRef
     private Set<Probleme> problemes;
+    @DBRef
     private Set<Media> medias;
     private String adresse;
     private Set<String> ouvriers;
@@ -62,6 +67,7 @@ public class Chantier
     private boolean regularite;
     private Date dateDebutEffectif;
     private Date dateFinEffectif;
+    @DBRef
     private Set<RapportChantierRegulier> rapportsRegulier;
 
     public Chantier()
