@@ -37,7 +37,7 @@ public class DemandeDeChantierDTO
     private int nombreEmployes;
     private String materiel;
     private String adresse;
-    private String regularite;
+    private boolean regularite;
     private int estimationTemps;
     private String particularite;
     private String description;

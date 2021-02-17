@@ -64,7 +64,7 @@ public interface DemandeDeChantierMapper
     @InheritInverseConfiguration(name = "toDemandeDeChantier")
     DemandeDeChantierGetDTO toDemandeDeChantierGetDTO(DemandeDeChantier demandeDeChantier);
 
-    List<DemandeDeChantierGetDTO> toDemandeDeChantierDTO(List<DemandeDeChantier> demandeDeChantiers);
+    List<DemandeDeChantierGetDTO> toDemandeDeChantierGetDTO(List<DemandeDeChantier> demandeDeChantiers);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "siteId", target = "site", qualifiedByName = "siteIdToSite")

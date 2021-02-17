@@ -33,6 +33,8 @@ import fr.tezea.chantiers.repository.site.SiteRepository;
 import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
 import fr.tezea.chantiers.service.dto.chantier.ChantierGetDTO;
 import fr.tezea.chantiers.service.mapper.chantier.ChantierMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +75,17 @@ public class ChantierService
             return this.chantierMapper.toChantierGetDTO(chantier.get());
         }
         return new ChantierGetDTO();
+    }
+
+    public List<ChantierGetDTO> getAllChantier()
+    {
+        List<Chantier> chantier = this.chantierRepository.findAll();
+
+        if (!chantier.isEmpty())
+        {
+            return this.chantierMapper.toChantierGetDTO(chantier);
+        }
+        return new ArrayList<>();
     }
 
     public long addChantier(ChantierDTO chantierDTO)

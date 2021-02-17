@@ -25,6 +25,7 @@ package fr.tezea.chantiers.rest.api.chantier.api;
 
 import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,10 @@ public interface MediaResourceV1
     @GetMapping("/get/{id}")
     @ResponseBody
     public ResponseEntity<MediaDTO> getMediaById(@PathVariable("id") long id);
+
+    @GetMapping("/get")
+    @ResponseBody
+    public ResponseEntity<List<MediaDTO>> getAllMedia();
 
     @PostMapping("/add")
     @ResponseBody

@@ -27,6 +27,8 @@ import fr.tezea.chantiers.domain.site.Site;
 import fr.tezea.chantiers.repository.site.SiteRepository;
 import fr.tezea.chantiers.service.dto.site.SiteDTO;
 import fr.tezea.chantiers.service.mapper.site.SiteMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,17 @@ public class SiteService
             return this.siteMapper.toSiteDTO(site.get());
         }
         return new SiteDTO();
+    }
+
+    public List<SiteDTO> getAllSite()
+    {
+        List<Site> site = this.siteRepository.findAll();
+
+        if (!site.isEmpty())
+        {
+            return this.siteMapper.toSiteDTO(site);
+        }
+        return new ArrayList<>();
     }
 
     public long addSite(SiteDTO siteDTO)

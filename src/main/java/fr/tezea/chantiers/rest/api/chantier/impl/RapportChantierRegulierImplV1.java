@@ -27,6 +27,7 @@ import fr.tezea.chantiers.rest.api.chantier.api.RapportChantierRegulierRessource
 import fr.tezea.chantiers.service.RapportChantierRegulierService;
 import fr.tezea.chantiers.service.dto.chantier.RapportChantierRegulierDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +47,12 @@ public class RapportChantierRegulierImplV1 implements RapportChantierRegulierRes
     public ResponseEntity<RapportChantierRegulierDTO> getRapportChantierRegulierById(long id)
     {
         return ResponseEntity.ok(this.rapportChantierRegulierService.getRapportChantierRegulierById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<RapportChantierRegulierDTO>> getAllRapportChantierRegulier()
+    {
+        return ResponseEntity.ok(this.rapportChantierRegulierService.getAllRapportChantierRegulier());
     }
 
     @Override

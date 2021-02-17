@@ -25,6 +25,7 @@ package fr.tezea.chantiers.rest.api.client.api;
 
 import fr.tezea.chantiers.service.dto.client.ClientDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,10 @@ public interface ClientResourceV1
     @GetMapping("/get/{id}")
     @ResponseBody
     public ResponseEntity<ClientDTO> getClientById(@PathVariable("id") long id);
+
+    @GetMapping("/get")
+    @ResponseBody
+    public ResponseEntity<List<ClientDTO>> getAllClient();
 
     @PostMapping("/add")
     @ResponseBody

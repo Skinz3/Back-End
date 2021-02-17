@@ -28,6 +28,7 @@ import fr.tezea.chantiers.service.DemandeDeChantierService;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierGetDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,12 @@ public class DemandeDeChantierImplV1 implements DemandeDeChantierResourceV1
     public ResponseEntity<DemandeDeChantierGetDTO> getDemandeDeChantierById(@PathVariable("id") long id)
     {
         return ResponseEntity.ok(this.demandeDeChantierService.getDemandeDeChantierById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<DemandeDeChantierGetDTO>> getAllDemandeDeChantier()
+    {
+        return ResponseEntity.ok(this.demandeDeChantierService.getAllDemandeDeChantier());
     }
 
     @Override
