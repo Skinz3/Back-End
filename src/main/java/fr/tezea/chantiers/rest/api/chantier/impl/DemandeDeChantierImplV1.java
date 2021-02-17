@@ -26,6 +26,7 @@ package fr.tezea.chantiers.rest.api.chantier.impl;
 import fr.tezea.chantiers.rest.api.chantier.api.DemandeDeChantierResourceV1;
 import fr.tezea.chantiers.service.DemandeDeChantierService;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
+import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierGetDTO;
 import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class DemandeDeChantierImplV1 implements DemandeDeChantierResourceV1
     }
 
     @Override
-    public ResponseEntity<DemandeDeChantierDTO> getDemandeDeChantierById(@PathVariable("id") long id)
+    public ResponseEntity<DemandeDeChantierGetDTO> getDemandeDeChantierById(@PathVariable("id") long id)
     {
         return ResponseEntity.ok(this.demandeDeChantierService.getDemandeDeChantierById(id));
     }

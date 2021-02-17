@@ -23,52 +23,51 @@
  */
 package fr.tezea.chantiers.rest.api.chantier.impl;
 
-import fr.tezea.chantiers.rest.api.chantier.api.ChantierResourceV1;
-import fr.tezea.chantiers.service.ChantierService;
-import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
-import fr.tezea.chantiers.service.dto.chantier.ChantierGetDTO;
+import fr.tezea.chantiers.rest.api.chantier.api.RapportChantierRegulierRessourceV1;
+import fr.tezea.chantiers.service.RapportChantierRegulierService;
+import fr.tezea.chantiers.service.dto.chantier.RapportChantierRegulierDTO;
 import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ChantierResourceImplV1 implements ChantierResourceV1
+public class RapportChantierRegulierImplV1 implements RapportChantierRegulierRessourceV1
 {
-    private final ChantierService chantierService;
+    private final RapportChantierRegulierService rapportChantierRegulierService;
 
-    public ChantierResourceImplV1(ChantierService chantierService)
+    public RapportChantierRegulierImplV1(RapportChantierRegulierService rapportChantierRegulierService)
     {
         super();
-        this.chantierService = chantierService;
+        this.rapportChantierRegulierService = rapportChantierRegulierService;
     }
 
     @Override
-    public ResponseEntity<ChantierGetDTO> getChantierById(@PathVariable("id") long id)
+    public ResponseEntity<RapportChantierRegulierDTO> getRapportChantierRegulierById(long id)
     {
-        return ResponseEntity.ok(this.chantierService.getChantierById(id));
+        return ResponseEntity.ok(this.rapportChantierRegulierService.getRapportChantierRegulierById(id));
     }
 
     @Override
-    public ResponseEntity<URI> addChantier(@RequestBody ChantierDTO chantierDTO)
+    public ResponseEntity<URI> addRapportChantierRegulier(RapportChantierRegulierDTO rapportChantierRegulierDTO)
     {
-        URI location = URI.create(String.format("/get/%s", this.chantierService.addChantier(chantierDTO)));
+        URI location = URI.create(String.format("/get/%s",
+                this.rapportChantierRegulierService.addRapportChantierRegulier(rapportChantierRegulierDTO)));
         return ResponseEntity.created(location).build();
     }
 
     @Override
-    public ResponseEntity<ChantierDTO> updateChantierById(@PathVariable("id") long id,
-            @RequestBody ChantierDTO chantierDTO)
+    public ResponseEntity<RapportChantierRegulierDTO> updateRapportChantierRegulierById(long id,
+            RapportChantierRegulierDTO rapportChantierRegulierDTO)
     {
-        return ResponseEntity.ok(this.chantierService.updateChantierById(id, chantierDTO));
+        return ResponseEntity.ok(
+                this.rapportChantierRegulierService.updateRapportChantierRegulierById(id, rapportChantierRegulierDTO));
     }
 
     @Override
-    public ResponseEntity<Void> deleteChantierById(@PathVariable("id") long id)
+    public ResponseEntity<Void> deleteRapportChantierRegulierById(long id)
     {
-        this.chantierService.deleteChantierById(id);
+        this.rapportChantierRegulierService.deleteRapportChantierRegulierById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

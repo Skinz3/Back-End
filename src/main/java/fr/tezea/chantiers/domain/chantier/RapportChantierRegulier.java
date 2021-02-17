@@ -21,17 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.dto.chantier;
+package fr.tezea.chantiers.domain.chantier;
 
-import fr.tezea.chantiers.domain.chantier.MediaType;
-import java.util.Set;
+import java.util.Date;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-public class MediaDTO
+@Document
+public class RapportChantierRegulier
 {
+    @Transient
+    public static final String SEQUENCE_NAME = "rapportchantierregulier_sequence";
+    @Id
     private long id;
-    private String nomMedia;
-    private Set<String> imagesURL;
-    private MediaType mediaType;
+    private Date dateDebutTheorique;
+    private Date dateFinTheorique;
+    private Date dateDebutEffectif;
+    private Date dateFinEffectif;
+    private StatusType status;
 }

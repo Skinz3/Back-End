@@ -23,8 +23,7 @@
  */
 package fr.tezea.chantiers.rest.api.chantier.api;
 
-import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
-import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierGetDTO;
+import fr.tezea.chantiers.service.dto.chantier.RapportChantierRegulierDTO;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,23 +35,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping("/api/v1/demandedechantier")
-public interface DemandeDeChantierResourceV1
+@RequestMapping("/api/v1/rapportchantierregulier")
+public interface RapportChantierRegulierRessourceV1
 {
     @GetMapping("/get/{id}")
     @ResponseBody
-    public ResponseEntity<DemandeDeChantierGetDTO> getDemandeDeChantierById(@PathVariable("id") long id);
+    public ResponseEntity<RapportChantierRegulierDTO> getRapportChantierRegulierById(@PathVariable("id") long id);
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<URI> addDemandeDeChantier(@RequestBody DemandeDeChantierDTO demandeDeChantierDTO);
+    public ResponseEntity<URI> addRapportChantierRegulier(
+            @RequestBody RapportChantierRegulierDTO rapportChantierRegulierDTO);
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<DemandeDeChantierDTO> updateDemandeDeChantierById(@PathVariable("id") long id,
-            @RequestBody DemandeDeChantierDTO demandeDeChantierDTO);
+    public ResponseEntity<RapportChantierRegulierDTO> updateRapportChantierRegulierById(@PathVariable("id") long id,
+            @RequestBody RapportChantierRegulierDTO rapportChantierRegulierDTO);
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteDemandeDeChantierById(@PathVariable("id") long id);
+    public ResponseEntity<Void> deleteRapportChantierRegulierById(@PathVariable("id") long id);
 }

@@ -24,7 +24,7 @@
 package fr.tezea.chantiers.service.dto.chantier;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import lombok.Data;
 
 @Data
@@ -32,6 +32,6 @@ public class ProblemeDTO
 {
     private long id;
     private String description;
-    private List<String> imagesURL;
+    private Set<String> imagesURL;
     private Date date;
 }

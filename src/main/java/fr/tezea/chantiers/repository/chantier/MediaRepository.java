@@ -21,17 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.dto.chantier;
+package fr.tezea.chantiers.repository.chantier;
 
-import fr.tezea.chantiers.domain.chantier.MediaType;
-import java.util.Set;
-import lombok.Data;
+import fr.tezea.chantiers.domain.chantier.Media;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-@Data
-public class MediaDTO
+@Repository
+public interface MediaRepository extends MongoRepository<Media, Long>
 {
-    private long id;
-    private String nomMedia;
-    private Set<String> imagesURL;
-    private MediaType mediaType;
 }

@@ -24,7 +24,7 @@
 package fr.tezea.chantiers.service;
 
 import fr.tezea.chantiers.domain.chantier.Media;
-import fr.tezea.chantiers.repository.chantier.DocumentRepository;
+import fr.tezea.chantiers.repository.chantier.MediaRepository;
 import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
 import fr.tezea.chantiers.service.mapper.chantier.MediaMapper;
 import java.util.Optional;
@@ -34,10 +34,10 @@ import org.springframework.stereotype.Service;
 public class MediaService
 {
     private final MediaMapper mediaMapper;
-    private final DocumentRepository mediaRepository;
+    private final MediaRepository mediaRepository;
     private final SequenceGeneratorService sequenceGenerator;
 
-    public MediaService(MediaMapper mediaMapper, DocumentRepository mediaRepository,
+    public MediaService(MediaMapper mediaMapper, MediaRepository mediaRepository,
             SequenceGeneratorService sequenceGenerator)
     {
         super();
