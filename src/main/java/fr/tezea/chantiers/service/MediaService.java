@@ -27,6 +27,8 @@ import fr.tezea.chantiers.domain.chantier.Media;
 import fr.tezea.chantiers.repository.chantier.MediaRepository;
 import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
 import fr.tezea.chantiers.service.mapper.chantier.MediaMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +57,17 @@ public class MediaService
             return this.mediaMapper.toMediaDTO(media.get());
         }
         return new MediaDTO();
+    }
+
+    public List<MediaDTO> getAllMedia()
+    {
+        List<Media> media = this.mediaRepository.findAll();
+
+        if (!media.isEmpty())
+        {
+            return this.mediaMapper.toMediaDTO(media);
+        }
+        return new ArrayList<>();
     }
 
     public long addMedia(MediaDTO mediaDTO)

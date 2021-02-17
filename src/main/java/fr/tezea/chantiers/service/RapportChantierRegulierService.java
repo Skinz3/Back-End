@@ -27,6 +27,8 @@ import fr.tezea.chantiers.domain.chantier.RapportChantierRegulier;
 import fr.tezea.chantiers.repository.chantier.RapportChantierRegulierRepository;
 import fr.tezea.chantiers.service.dto.chantier.RapportChantierRegulierDTO;
 import fr.tezea.chantiers.service.mapper.chantier.RapportChantierRegulierMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,17 @@ public class RapportChantierRegulierService
             return this.rapportChantierRegulierMapper.toRapportChantierRegulierDTO(rapportChantierRegulier.get());
         }
         return new RapportChantierRegulierDTO();
+    }
+
+    public List<RapportChantierRegulierDTO> getAllRapportChantierRegulier()
+    {
+        List<RapportChantierRegulier> rapportChantierRegulier = this.rapportChantierRegulierRepository.findAll();
+
+        if (!rapportChantierRegulier.isEmpty())
+        {
+            return this.rapportChantierRegulierMapper.toRapportChantierRegulierDTO(rapportChantierRegulier);
+        }
+        return new ArrayList<>();
     }
 
     public long addRapportChantierRegulier(RapportChantierRegulierDTO rapportChantierRegulierDTO)

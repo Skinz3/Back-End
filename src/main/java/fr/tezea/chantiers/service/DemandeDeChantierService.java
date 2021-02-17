@@ -30,6 +30,8 @@ import fr.tezea.chantiers.repository.site.SiteRepository;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierGetDTO;
 import fr.tezea.chantiers.service.mapper.chantier.DemandeDeChantierMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +65,17 @@ public class DemandeDeChantierService
             return this.demandeDeChantierMapper.toDemandeDeChantierGetDTO(demandeDeChantier.get());
         }
         return new DemandeDeChantierGetDTO();
+    }
+
+    public List<DemandeDeChantierGetDTO> getAllDemandeDeChantier()
+    {
+        List<DemandeDeChantier> demandeDeChantier = this.demandeDeChantierRepository.findAll();
+
+        if (!demandeDeChantier.isEmpty())
+        {
+            return this.demandeDeChantierMapper.toDemandeDeChantierGetDTO(demandeDeChantier);
+        }
+        return new ArrayList<>();
     }
 
     public long addDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO)

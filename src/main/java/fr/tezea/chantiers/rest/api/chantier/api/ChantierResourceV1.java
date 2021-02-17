@@ -26,6 +26,7 @@ package fr.tezea.chantiers.rest.api.chantier.api;
 import fr.tezea.chantiers.service.dto.chantier.ChantierDTO;
 import fr.tezea.chantiers.service.dto.chantier.ChantierGetDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,10 @@ public interface ChantierResourceV1
     @GetMapping("/get/{id}")
     @ResponseBody
     public ResponseEntity<ChantierGetDTO> getChantierById(@PathVariable("id") long id);
+
+    @GetMapping("/get")
+    @ResponseBody
+    public ResponseEntity<List<ChantierGetDTO>> getAllChantier();
 
     @PostMapping("/add")
     @ResponseBody

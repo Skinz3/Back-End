@@ -81,7 +81,7 @@ public interface ChantierMapper
     @InheritInverseConfiguration(name = "toChantier")
     ChantierGetDTO toChantierGetDTO(Chantier chantier);
 
-    List<ChantierDTO> toChantierDTO(List<Chantier> chantiers);
+    List<ChantierGetDTO> toChantierGetDTO(List<Chantier> chantiers);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "siteId", target = "site", qualifiedByName = "siteIdToSite")
