@@ -25,9 +25,6 @@ package fr.tezea.chantiers.security.services;
 
 import fr.tezea.chantiers.domain.user.Utilisateur;
 import fr.tezea.chantiers.repository.user.UtilisateurRepository;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,12 +41,14 @@ public class MyUserDetailsService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-    	//Exemple d'utilisateur a ajouter dans la collection "utilisateur".
-    	//{"_id":1,"username":"Juan","password":"Juan","role":"ADMINISTRATION"}
-    	System.out.println("Loading user");
-        Utilisateur user = utilisateurRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        System.out.println("User : " + user.getUsername() + " loaded");
-        
-        return new User(user.getUsername(), user.getPassword(), new ArrayList());
+        //Exemple d'utilisateur a ajouter dans la collection "utilisateur".
+        //{"_id":1,"username":"Juan","password":"Juan","role":"ADMINISTRATION"}
+        //System.out.println("Loading user");
+        Utilisateur user = utilisateurRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        //System.out.println("User : " + user.getUsername() + " loaded");
+        UserDetails toReturn = User.builder().username(user.getUsername()).password(user.getPassword())
+                .roles(user.getRole().getType()).build();
+        return toReturn;
     }
 }

@@ -54,7 +54,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.csrf().disable().authorizeRequests().antMatchers("/api/v1/authentification/authentifier").permitAll()
+        http.csrf().disable().authorizeRequests()
+        		.antMatchers("/api/v1/authentification/authentifier").permitAll()
+                .antMatchers("/api/**").hasRole("Administration")
                 .anyRequest().authenticated().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
