@@ -25,8 +25,7 @@ package fr.tezea.chantiers.domain.user;
 
 public enum RoleType
 {
-    TELEPHONE("Telephone"), ADMINISTRATION("Administration"), DIRECTION("Direction"), ETATDESLIEUX("État des lieux"),
-    LIVRAISON("Livraison");
+    TELEPHONE("Telephone"), ADMINISTRATION("Administration"), DIRECTION("Direction"), CHEF_DE_SITE("Chef de site");
 
     private final String type;
 
