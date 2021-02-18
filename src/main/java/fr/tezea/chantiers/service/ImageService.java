@@ -24,6 +24,7 @@
 package fr.tezea.chantiers.service;
 
 import fr.tezea.chantiers.domain.chantier.Image;
+import fr.tezea.chantiers.domain.chantier.Media;
 import fr.tezea.chantiers.repository.chantier.ImageRepository;
 import fr.tezea.chantiers.service.dto.chantier.ImageDTO;
 import fr.tezea.chantiers.service.mapper.chantier.ImageMapper;
@@ -64,6 +65,7 @@ public class ImageService
     public long addImage(MultipartFile file) throws IOException
     {
         Image image = new Image();
+        image.setId(sequenceGenerator.generateSequence(Image.SEQUENCE_NAME));
         image.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
         return imageRepository.save(image).getId();
     }
