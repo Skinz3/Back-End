@@ -32,6 +32,6 @@ public class ProblemeDTO
 {
     private long id;
     private String description;
-    private Set<String> imagesURL;
+    private Set<Long> imagesId;
     private Date date;
 }

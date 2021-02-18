@@ -40,11 +40,11 @@ public class Probleme
     @Id
     private long id;
     private String description;
-    private Set<String> imagesURL;
+    private Set<Long> imagesId;
     private Date date;
 
     public Probleme()
     {
-        this.imagesURL = new HashSet<>();
+        this.imagesId = new HashSet<>();
     }
 }
