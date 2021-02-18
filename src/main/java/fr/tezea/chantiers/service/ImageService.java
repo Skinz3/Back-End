@@ -24,7 +24,6 @@
 package fr.tezea.chantiers.service;
 
 import fr.tezea.chantiers.domain.chantier.Image;
-import fr.tezea.chantiers.domain.chantier.Media;
 import fr.tezea.chantiers.repository.chantier.ImageRepository;
 import fr.tezea.chantiers.service.dto.chantier.ImageDTO;
 import fr.tezea.chantiers.service.mapper.chantier.ImageMapper;
