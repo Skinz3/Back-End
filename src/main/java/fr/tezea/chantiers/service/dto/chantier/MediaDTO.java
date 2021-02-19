@@ -32,6 +32,6 @@ public class MediaDTO
 {
     private long id;
     private String nomMedia;
-    private Set<String> imagesURL;
+    private Set<Long> imagesId;
     private MediaType mediaType;
 }

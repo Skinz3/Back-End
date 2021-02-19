@@ -23,28 +23,19 @@
  */
 package fr.tezea.chantiers.domain.chantier;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Data;
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-public class Probleme
+public class Image
 {
     @Transient
-    public static final String SEQUENCE_NAME = "probleme_sequence";
+    public static final String SEQUENCE_NAME = "image_sequence";
     @Id
     private long id;
-    private String description;
-    private Set<Long> imagesId;
-    private Date date;
-
-    public Probleme()
-    {
-        this.imagesId = new HashSet<>();
-    }
+    private Binary image;
 }

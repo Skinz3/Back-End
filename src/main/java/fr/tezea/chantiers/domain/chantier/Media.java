@@ -39,11 +39,11 @@ public class Media
     @Id
     private long id;
     private String nomMedia;
-    private Set<String> imagesURL;
+    private Set<Long> imagesId;
     private MediaType mediaType;
 
     public Media()
     {
-        this.imagesURL = new HashSet<>();
+        this.imagesId = new HashSet<>();
     }
 }

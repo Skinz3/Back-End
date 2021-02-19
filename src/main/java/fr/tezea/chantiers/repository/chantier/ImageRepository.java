@@ -21,30 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.chantier;
+package fr.tezea.chantiers.repository.chantier;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
+import fr.tezea.chantiers.domain.chantier.Image;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-@Data
-@Document
-public class Probleme
+@Repository
+public interface ImageRepository extends MongoRepository<Image, Long>
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "probleme_sequence";
-    @Id
-    private long id;
-    private String description;
-    private Set<Long> imagesId;
-    private Date date;
-
-    public Probleme()
-    {
-        this.imagesId = new HashSet<>();
-    }
 }
