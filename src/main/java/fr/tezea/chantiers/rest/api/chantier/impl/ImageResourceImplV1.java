@@ -58,7 +58,7 @@ public class ImageResourceImplV1 implements ImageResourceV1
     {
     	long imageIndex = imageService.addImage(image);
         URI location = URI.create(String.format("/get/%s", imageIndex));
-        return ResponseEntity.created(location).body(location);
+        return ResponseEntity.created(location).body(URI.create("{\"imageId\":"+ imageIndex));
     }
 
     @Override
