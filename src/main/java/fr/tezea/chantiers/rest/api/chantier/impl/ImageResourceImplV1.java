@@ -56,9 +56,8 @@ public class ImageResourceImplV1 implements ImageResourceV1
     @Override
     public ResponseEntity<URI> addImage(@RequestParam("image") MultipartFile image, Model model) throws IOException
     {
-    	long imageIndex = imageService.addImage(image);
-        URI location = URI.create(String.format("/get/%s", imageIndex));
-        return ResponseEntity.created(location).body(URI.create("{\"imageId\":"+ imageIndex));
+        URI location = URI.create(String.format("/get/%s", imageService.addImage(image)));
+        return ResponseEntity.created(location).build();
     }
 
     @Override
