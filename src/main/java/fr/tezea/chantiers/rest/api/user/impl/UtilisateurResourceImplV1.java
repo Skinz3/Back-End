@@ -23,12 +23,16 @@
  */
 package fr.tezea.chantiers.rest.api.user.impl;
 
+import fr.tezea.chantiers.domain.user.RoleType;
+import fr.tezea.chantiers.repository.user.UtilisateurRepository;
 import fr.tezea.chantiers.rest.api.user.api.UtilisateurResourceV1;
 import fr.tezea.chantiers.service.UtilisateurService;
 import fr.tezea.chantiers.service.dto.user.UtilisateurDTO;
 import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,4 +74,10 @@ public class UtilisateurResourceImplV1 implements UtilisateurResourceV1
         this.utilisateurService.deleteUtilisateurById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+	@Override
+	public ResponseEntity<UtilisateurDTO> getAuthentifiedUser() {
+		return ResponseEntity.ok(this.utilisateurService.getUtilisateurByUsername(
+				SecurityContextHolder.getContext().getAuthentication().getName()));
+	}
 }
