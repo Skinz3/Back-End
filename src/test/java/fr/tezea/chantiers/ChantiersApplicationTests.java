@@ -23,14 +23,34 @@
  */
 package fr.tezea.chantiers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import fr.tezea.chantiers.rest.api.chantier.api.ChantierResourceV1;
+import fr.tezea.chantiers.rest.api.client.api.ClientResourceV1;
+import fr.tezea.chantiers.rest.api.school.api.StudentResourceV1;
+import fr.tezea.chantiers.rest.api.site.api.SiteResourceV1;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class ChantiersApplicationTests
 {
+    @Autowired
+    private ChantierResourceV1 chantierResourceV1;
+    @Autowired
+    private ClientResourceV1 clientResourceV1;
+    @Autowired
+    private StudentResourceV1 studentResourceV1;
+    @Autowired
+    private SiteResourceV1 siteResourceV1;
+
     @Test
     void contextLoads()
     {
+        assertThat(chantierResourceV1).isNotNull();
+        assertThat(clientResourceV1).isNotNull();
+        assertThat(studentResourceV1).isNotNull();
+        assertThat(siteResourceV1).isNotNull();
     }
 }
