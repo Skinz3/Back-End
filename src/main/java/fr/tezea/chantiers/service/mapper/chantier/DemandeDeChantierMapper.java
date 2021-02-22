@@ -24,27 +24,78 @@
 package fr.tezea.chantiers.service.mapper.chantier;
 
 import fr.tezea.chantiers.domain.chantier.DemandeDeChantier;
+import fr.tezea.chantiers.domain.client.Client;
+import fr.tezea.chantiers.domain.site.Site;
+import fr.tezea.chantiers.repository.client.ClientRepository;
+import fr.tezea.chantiers.repository.site.SiteRepository;
 import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierDTO;
+import fr.tezea.chantiers.service.dto.chantier.DemandeDeChantierGetDTO;
+import fr.tezea.chantiers.service.mapper.client.ClientMapper;
+import fr.tezea.chantiers.service.mapper.site.SiteMapper;
 import java.util.List;
+import java.util.Optional;
+import org.mapstruct.Context;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring", uses = { ClientMapper.class,
+        SiteMapper.class }, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface DemandeDeChantierMapper
 {
     @Mapping(target = "id", ignore = true)
-    DemandeDeChantier toDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO);
+    @Mapping(source = "siteId", target = "site", qualifiedByName = "siteIdToSite")
+    @Mapping(source = "clientId", target = "client", qualifiedByName = "clientIdToClient")
+    DemandeDeChantier toDemandeDeChantier(DemandeDeChantierDTO demandeDeChantierDTO,
+            @Context ClientRepository clientRepository, @Context Client oldClient,
+            @Context SiteRepository siteRepository, @Context Site oldSite);
 
     @InheritInverseConfiguration(name = "toDemandeDeChantier")
+    @Mapping(source = "site.id", target = "siteId")
+    @Mapping(source = "client.id", target = "clientId")
     DemandeDeChantierDTO toDemandeDeChantierDTO(DemandeDeChantier demandeDeChantier);
 
-    List<DemandeDeChantierDTO> toDemandeDeChantierDTO(List<DemandeDeChantier> demandeDeChantiers);
+    @Mapping(target = "id", ignore = true)
+    DemandeDeChantier toDemandeDeChantier(DemandeDeChantierGetDTO demandeDeChantierDTO);
+
+    @InheritInverseConfiguration(name = "toDemandeDeChantier")
+    DemandeDeChantierGetDTO toDemandeDeChantierGetDTO(DemandeDeChantier demandeDeChantier);
+
+    List<DemandeDeChantierGetDTO> toDemandeDeChantierGetDTO(List<DemandeDeChantier> demandeDeChantiers);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "siteId", target = "site", qualifiedByName = "siteIdToSite")
+    @Mapping(source = "clientId", target = "client", qualifiedByName = "clientIdToClient")
     DemandeDeChantier updateDemandeDeChantierFromDTO(DemandeDeChantierDTO demandeDeChantierDTO,
-            @MappingTarget DemandeDeChantier demandeDeChantier);
+            @MappingTarget DemandeDeChantier demandeDeChantier, @Context ClientRepository clientRepository,
+            @Context Client oldClient, @Context SiteRepository siteRepository, @Context Site oldSite);
+
+    @Named("clientIdToClient")
+    default Client clientIdToClient(long clientId, @Context ClientRepository clientRepository,
+            @Context Client oldClient)
+    {
+        Optional<Client> client = clientRepository.findById(clientId);
+
+        if (client.isPresent())
+        {
+            return client.get();
+        }
+        return oldClient;
+    }
+
+    @Named("siteIdToSite")
+    default Site siteIdToSite(long siteId, @Context SiteRepository siteRepository, @Context Site oldSite)
+    {
+        Optional<Site> site = siteRepository.findById(siteId);
+
+        if (site.isPresent())
+        {
+            return site.get();
+        }
+        return oldSite;
+    }
 }

@@ -25,14 +25,16 @@ package fr.tezea.chantiers.domain.chantier;
 
 import fr.tezea.chantiers.domain.client.Client;
 import fr.tezea.chantiers.domain.site.Site;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @Document
 public class DemandeDeChantier
 {
@@ -40,14 +42,24 @@ public class DemandeDeChantier
     public static final String SEQUENCE_NAME = "demandedechantier_sequence";
     @Id
     private long id;
+    @DBRef
     private Site site;
+    @DBRef
     private Client client;
-    private String employee;
-    private String material;
+    private int nombreEmployes;
+    private String materiel;
     private String adresse;
-    private String regularite;
+    private boolean regularite;
     private int estimationTemps;
     private String particularite;
     private String description;
-    private String infoInterne;
+    private String informationsInterne;
+    private Date dateDebutRegularite;
+    private Date dateFinRegularite;
+    private Set<JourSemaineType> joursRegularite;
+
+    public DemandeDeChantier()
+    {
+        this.joursRegularite = new HashSet<>();
+    }
 }

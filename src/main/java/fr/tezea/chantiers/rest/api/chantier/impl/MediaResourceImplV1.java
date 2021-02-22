@@ -27,6 +27,7 @@ import fr.tezea.chantiers.rest.api.chantier.api.MediaResourceV1;
 import fr.tezea.chantiers.service.MediaService;
 import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,12 @@ public class MediaResourceImplV1 implements MediaResourceV1
     public ResponseEntity<MediaDTO> getMediaById(@PathVariable("id") long id)
     {
         return ResponseEntity.ok(this.mediaService.getMediaById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<MediaDTO>> getAllMedia()
+    {
+        return ResponseEntity.ok(this.mediaService.getAllMedia());
     }
 
     @Override

@@ -27,6 +27,7 @@ import fr.tezea.chantiers.rest.api.chantier.api.ProblemeResourceV1;
 import fr.tezea.chantiers.service.ProblemeService;
 import fr.tezea.chantiers.service.dto.chantier.ProblemeDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,12 @@ public class ProblemeResourceImplV1 implements ProblemeResourceV1
     public ResponseEntity<ProblemeDTO> getProblemeById(@PathVariable("id") long id)
     {
         return ResponseEntity.ok(this.problemeService.getProblemeById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<ProblemeDTO>> getAllProbleme()
+    {
+        return ResponseEntity.ok(this.problemeService.getAllProbleme());
     }
 
     @Override

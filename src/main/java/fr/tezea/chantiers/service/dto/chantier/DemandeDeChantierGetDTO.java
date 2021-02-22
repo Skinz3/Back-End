@@ -23,15 +23,28 @@
  */
 package fr.tezea.chantiers.service.dto.chantier;
 
-import fr.tezea.chantiers.domain.chantier.MediaType;
+import fr.tezea.chantiers.domain.chantier.JourSemaineType;
+import fr.tezea.chantiers.service.dto.client.ClientDTO;
+import fr.tezea.chantiers.service.dto.site.SiteDTO;
+import java.util.Date;
 import java.util.Set;
 import lombok.Data;
 
 @Data
-public class MediaDTO
+public class DemandeDeChantierGetDTO
 {
     private long id;
-    private String nomMedia;
-    private Set<String> imagesURL;
-    private MediaType mediaType;
+    private SiteDTO site;
+    private ClientDTO client;
+    private int nombreEmployes;
+    private String materiel;
+    private String adresse;
+    private boolean regularite;
+    private int estimationTemps;
+    private String particularite;
+    private String description;
+    private String informationsInterne;
+    private Date dateDebutRegularite;
+    private Date dateFinRegularite;
+    private Set<JourSemaineType> joursRegularite;
 }

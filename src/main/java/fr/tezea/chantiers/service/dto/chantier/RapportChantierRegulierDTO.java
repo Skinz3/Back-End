@@ -23,15 +23,17 @@
  */
 package fr.tezea.chantiers.service.dto.chantier;
 
-import fr.tezea.chantiers.domain.chantier.MediaType;
-import java.util.Set;
+import fr.tezea.chantiers.domain.chantier.StatusType;
+import java.util.Date;
 import lombok.Data;
 
 @Data
-public class MediaDTO
+public class RapportChantierRegulierDTO
 {
     private long id;
-    private String nomMedia;
-    private Set<String> imagesURL;
-    private MediaType mediaType;
+    private Date dateDebutTheorique;
+    private Date dateFinTheorique;
+    private Date dateDebutEffectif;
+    private Date dateFinEffectif;
+    private StatusType status;
 }

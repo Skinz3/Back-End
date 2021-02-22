@@ -27,6 +27,8 @@ import fr.tezea.chantiers.domain.chantier.Probleme;
 import fr.tezea.chantiers.repository.chantier.ProblemeRepository;
 import fr.tezea.chantiers.service.dto.chantier.ProblemeDTO;
 import fr.tezea.chantiers.service.mapper.chantier.ProblemeMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,17 @@ public class ProblemeService
         return new ProblemeDTO();
     }
 
+    public List<ProblemeDTO> getAllProbleme()
+    {
+        List<Probleme> probleme = this.problemeRepository.findAll();
+
+        if (!probleme.isEmpty())
+        {
+            return this.problemeMapper.toProblemeDTO(probleme);
+        }
+        return new ArrayList<>();
+    }
+
     public long addProbleme(ProblemeDTO problemeDTO)
     {
         Probleme probleme = this.problemeMapper.toProbleme(problemeDTO);
@@ -82,7 +95,7 @@ public class ProblemeService
 
         if (probleme.isPresent())
         {
-            this.problemeRepository.deleteById(id);
+            this.problemeRepository.delete(probleme.get());
         }
     }
 }

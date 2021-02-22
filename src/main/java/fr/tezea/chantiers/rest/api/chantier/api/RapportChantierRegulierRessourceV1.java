@@ -23,7 +23,7 @@
  */
 package fr.tezea.chantiers.rest.api.chantier.api;
 
-import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
+import fr.tezea.chantiers.service.dto.chantier.RapportChantierRegulierDTO;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -36,26 +36,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping("/api/v1/media")
-public interface MediaResourceV1
+@RequestMapping("/api/v1/rapportchantierregulier")
+public interface RapportChantierRegulierRessourceV1
 {
     @GetMapping("/get/{id}")
     @ResponseBody
-    public ResponseEntity<MediaDTO> getMediaById(@PathVariable("id") long id);
+    public ResponseEntity<RapportChantierRegulierDTO> getRapportChantierRegulierById(@PathVariable("id") long id);
 
     @GetMapping("/get")
     @ResponseBody
-    public ResponseEntity<List<MediaDTO>> getAllMedia();
+    public ResponseEntity<List<RapportChantierRegulierDTO>> getAllRapportChantierRegulier();
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<URI> addMedia(@RequestBody MediaDTO mediaDTO);
+    public ResponseEntity<URI> addRapportChantierRegulier(
+            @RequestBody RapportChantierRegulierDTO rapportChantierRegulierDTO);
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<MediaDTO> updateMediaById(@PathVariable("id") long id, @RequestBody MediaDTO mediaDTO);
+    public ResponseEntity<RapportChantierRegulierDTO> updateRapportChantierRegulierById(@PathVariable("id") long id,
+            @RequestBody RapportChantierRegulierDTO rapportChantierRegulierDTO);
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteMediaById(@PathVariable("id") long id);
+    public ResponseEntity<Void> deleteRapportChantierRegulierById(@PathVariable("id") long id);
 }

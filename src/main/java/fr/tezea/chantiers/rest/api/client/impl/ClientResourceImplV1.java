@@ -27,6 +27,7 @@ import fr.tezea.chantiers.rest.api.client.api.ClientResourceV1;
 import fr.tezea.chantiers.service.ClientService;
 import fr.tezea.chantiers.service.dto.client.ClientDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,12 @@ public class ClientResourceImplV1 implements ClientResourceV1
     public ResponseEntity<ClientDTO> getClientById(@PathVariable("id") long id)
     {
         return ResponseEntity.ok(this.clientService.getClientById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<ClientDTO>> getAllClient()
+    {
+        return ResponseEntity.ok(this.clientService.getAllClient());
     }
 
     @Override

@@ -24,9 +24,11 @@
 package fr.tezea.chantiers.service;
 
 import fr.tezea.chantiers.domain.chantier.Media;
-import fr.tezea.chantiers.repository.chantier.DocumentRepository;
+import fr.tezea.chantiers.repository.chantier.MediaRepository;
 import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
 import fr.tezea.chantiers.service.mapper.chantier.MediaMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +36,10 @@ import org.springframework.stereotype.Service;
 public class MediaService
 {
     private final MediaMapper mediaMapper;
-    private final DocumentRepository mediaRepository;
+    private final MediaRepository mediaRepository;
     private final SequenceGeneratorService sequenceGenerator;
 
-    public MediaService(MediaMapper mediaMapper, DocumentRepository mediaRepository,
+    public MediaService(MediaMapper mediaMapper, MediaRepository mediaRepository,
             SequenceGeneratorService sequenceGenerator)
     {
         super();
@@ -55,6 +57,17 @@ public class MediaService
             return this.mediaMapper.toMediaDTO(media.get());
         }
         return new MediaDTO();
+    }
+
+    public List<MediaDTO> getAllMedia()
+    {
+        List<Media> media = this.mediaRepository.findAll();
+
+        if (!media.isEmpty())
+        {
+            return this.mediaMapper.toMediaDTO(media);
+        }
+        return new ArrayList<>();
     }
 
     public long addMedia(MediaDTO mediaDTO)
@@ -82,7 +95,7 @@ public class MediaService
 
         if (media.isPresent())
         {
-            this.mediaRepository.deleteById(id);
+            this.mediaRepository.delete(media.get());
         }
     }
 }

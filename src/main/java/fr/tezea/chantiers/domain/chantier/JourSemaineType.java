@@ -21,17 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.dto.chantier;
+package fr.tezea.chantiers.domain.chantier;
 
-import fr.tezea.chantiers.domain.chantier.MediaType;
-import java.util.Set;
-import lombok.Data;
-
-@Data
-public class MediaDTO
+public enum JourSemaineType
 {
-    private long id;
-    private String nomMedia;
-    private Set<String> imagesURL;
-    private MediaType mediaType;
+    LUNDI("Lundi"), MARDI("Mardi"), MERCREDI("Mercredi"), JEUDI("Jeudi"), VENDREDI("Vendredi"), SAMEDI("Samedi"),
+    DIMANCHE("Dimanche");
+
+    private final String jour;
+
+    private JourSemaineType(String jour)
+    {
+        this.jour = jour;
+    }
+
+    public String getJour()
+    {
+        return this.jour;
+    }
+
+    public String getJourLowerCase()
+    {
+        return this.jour.toLowerCase();
+    }
 }

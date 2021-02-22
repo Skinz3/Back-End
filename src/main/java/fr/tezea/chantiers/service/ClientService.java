@@ -27,6 +27,8 @@ import fr.tezea.chantiers.domain.client.Client;
 import fr.tezea.chantiers.repository.client.ClientRepository;
 import fr.tezea.chantiers.service.dto.client.ClientDTO;
 import fr.tezea.chantiers.service.mapper.client.ClientMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,17 @@ public class ClientService
         return new ClientDTO();
     }
 
+    public List<ClientDTO> getAllClient()
+    {
+        List<Client> client = this.clientRepository.findAll();
+
+        if (!client.isEmpty())
+        {
+            return this.clientMapper.toClientDTO(client);
+        }
+        return new ArrayList<>();
+    }
+
     public long addClient(ClientDTO clientDTO)
     {
         Client client = this.clientMapper.toClient(clientDTO);
@@ -82,7 +95,7 @@ public class ClientService
 
         if (client.isPresent())
         {
-            this.clientRepository.deleteById(id);
+            this.clientRepository.delete(client.get());
         }
     }
 }

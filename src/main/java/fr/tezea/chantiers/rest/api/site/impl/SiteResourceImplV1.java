@@ -27,6 +27,7 @@ import fr.tezea.chantiers.rest.api.site.api.SiteResourceV1;
 import fr.tezea.chantiers.service.SiteService;
 import fr.tezea.chantiers.service.dto.site.SiteDTO;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,12 @@ public class SiteResourceImplV1 implements SiteResourceV1
     public ResponseEntity<SiteDTO> getSiteById(@PathVariable("id") long id)
     {
         return ResponseEntity.ok(this.siteService.getSiteById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<SiteDTO>> getAllSite()
+    {
+        return ResponseEntity.ok(this.siteService.getAllSite());
     }
 
     @Override
