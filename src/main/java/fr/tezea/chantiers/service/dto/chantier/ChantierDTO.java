@@ -52,6 +52,7 @@ public class ChantierDTO
     private Date dateDebutRegularite;
     private Date dateFinRegularite;
     private boolean regularite;
+    private boolean conducteurPresent;
     private Date dateDebutEffectif;
     private Date dateFinEffectif;
     private Set<Long> rapportsRegulierIds;
