@@ -41,12 +41,12 @@ public class ImageService
     private final ImageRepository imageRepository;
     private final SequenceGeneratorService sequenceGenerator;
 
-    public ImageService(ImageMapper ImageMapper, ImageRepository ImageRepository,
+    public ImageService(ImageMapper imageMapper, ImageRepository imageRepository,
             SequenceGeneratorService sequenceGenerator)
     {
         super();
-        this.imageMapper = ImageMapper;
-        this.imageRepository = ImageRepository;
+        this.imageMapper = imageMapper;
+        this.imageRepository = imageRepository;
         this.sequenceGenerator = sequenceGenerator;
     }
 
@@ -65,7 +65,7 @@ public class ImageService
     {
         Image image = new Image();
         image.setId(sequenceGenerator.generateSequence(Image.SEQUENCE_NAME));
-        image.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
+        image.setImageBinary(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
         return imageRepository.save(image).getId();
     }
 

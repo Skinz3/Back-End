@@ -30,5 +30,5 @@ import org.bson.types.Binary;
 public class ImageDTO
 {
     private long id;
-    private Binary image;
+    private Binary imageBinary;
 }

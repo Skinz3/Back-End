@@ -37,5 +37,5 @@ public class Image
     public static final String SEQUENCE_NAME = "image_sequence";
     @Id
     private long id;
-    private Binary image;
+    private Binary imageBinary;
 }
