@@ -31,6 +31,7 @@ import java.util.Set;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -41,7 +42,9 @@ public class DemandeDeChantier
     public static final String SEQUENCE_NAME = "demandedechantier_sequence";
     @Id
     private long id;
+    @DBRef
     private Site site;
+    @DBRef
     private Client client;
     private int nombreEmployes;
     private String materiel;

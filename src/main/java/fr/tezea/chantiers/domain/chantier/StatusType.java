@@ -25,7 +25,7 @@ package fr.tezea.chantiers.domain.chantier;
 
 public enum StatusType
 {
-    DEMARRE("Démarré"), ENATTENTE("En attente"), ENCOURS("En cours"), TERMINE("Terminé");
+    ENATTENTE("En attente"), ENCOURS("En cours"), TERMINE("Terminé");
 
     private final String type;
 
