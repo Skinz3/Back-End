@@ -70,6 +70,11 @@ public class Chantier
     private boolean conducteurPresent;
     @DBRef
     private Set<RapportChantierRegulier> rapportsRegulier;
+    private StatusIntervention statusIntervention;
+    private int nbOuvrier;
+    private String volume;
+    private String poid;
+    private String accessibilite;
 
     public Chantier()
     {

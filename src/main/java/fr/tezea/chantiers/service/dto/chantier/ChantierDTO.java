@@ -24,6 +24,7 @@
 package fr.tezea.chantiers.service.dto.chantier;
 
 import fr.tezea.chantiers.domain.chantier.JourSemaineType;
+import fr.tezea.chantiers.domain.chantier.StatusIntervention;
 import fr.tezea.chantiers.domain.chantier.StatusType;
 import java.util.Date;
 import java.util.Set;
@@ -56,4 +57,9 @@ public class ChantierDTO
     private Date dateDebutEffectif;
     private Date dateFinEffectif;
     private Set<Long> rapportsRegulierIds;
+    private StatusIntervention statusIntervention;
+    private int nbOuvrier;
+    private String volume;
+    private String poid;
+    private String accessibilite;
 }
