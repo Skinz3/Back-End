@@ -26,7 +26,6 @@ package fr.tezea.chantiers.rest.api.user.api;
 import fr.tezea.chantiers.service.dto.user.UtilisateurDTO;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

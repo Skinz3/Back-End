@@ -67,6 +67,7 @@ public class Chantier
     private boolean regularite;
     private Date dateDebutEffectif;
     private Date dateFinEffectif;
+    private boolean conducteurPresent;
     @DBRef
     private Set<RapportChantierRegulier> rapportsRegulier;
 

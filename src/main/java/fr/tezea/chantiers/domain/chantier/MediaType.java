@@ -26,7 +26,7 @@ package fr.tezea.chantiers.domain.chantier;
 public enum MediaType
 {
     SIGNATURE("Signature"), DEVIS("Devis"), FACTURE("Facture"), ETATDESLIEUX("État des lieux"), LIVRAISON("Livraison"),
-    AUTRE("Autre");
+    RETOURCLIENT("Retour client"), AUTRE("Autre");
 
     private final String type;
 
