@@ -23,9 +23,7 @@
  */
 package fr.tezea.chantiers.service;
 
-import fr.tezea.chantiers.domain.school.Professeur;
 import fr.tezea.chantiers.domain.school.Student;
-import fr.tezea.chantiers.repository.school.ProfesseurRepository;
 import fr.tezea.chantiers.repository.school.StudentRepository;
 import fr.tezea.chantiers.service.dto.school.StudentDTO;
 import fr.tezea.chantiers.service.mapper.school.StudentMapper;
@@ -37,16 +35,14 @@ public class StudentService
 {
     private final StudentMapper studentMapper;
     private final StudentRepository studentRepository;
-    private final ProfesseurRepository professeurRepository;
     private final SequenceGeneratorService sequenceGenerator;
 
     public StudentService(StudentMapper studentMapper, StudentRepository studentRepository,
-            ProfesseurRepository professeurRepository, SequenceGeneratorService sequenceGenerator)
+            SequenceGeneratorService sequenceGenerator)
     {
         super();
         this.studentMapper = studentMapper;
         this.studentRepository = studentRepository;
-        this.professeurRepository = professeurRepository;
         this.sequenceGenerator = sequenceGenerator;
     }
 
@@ -65,12 +61,6 @@ public class StudentService
     {
         Student student = this.studentMapper.toStudent(studentDTO);
         student.setId(sequenceGenerator.generateSequence(Student.SEQUENCE_NAME));
-        Optional<Professeur> professeur = this.professeurRepository.findById(studentDTO.getProfesseurId());
-
-        if (professeur.isPresent())
-        {
-            student.setProf(professeur.get());
-        }
         return this.studentRepository.save(student).getId();
     }
 
@@ -80,12 +70,6 @@ public class StudentService
 
         if (student.isPresent())
         {
-            Optional<Professeur> professeur = this.professeurRepository.findById(studentDTO.getProfesseurId());
-
-            if (professeur.isPresent())
-            {
-                student.get().setProf(professeur.get());
-            }
             return this.studentMapper.toStudentDTO(
                     studentRepository.save(this.studentMapper.updateStudentFromDTO(studentDTO, student.get())));
         }

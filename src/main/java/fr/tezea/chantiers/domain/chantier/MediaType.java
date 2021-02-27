@@ -21,21 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.domain.chantier;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Data
-@Document
-public class Student
+public enum MediaType
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
-    @Id
-    private long id;
-    private String name;
-    private String professeur;
+    SIGNATURE("Signature"), DEVIS("Devis"), FACTURE("Facture"), ETATDESLIEUX("État des lieux"), LIVRAISON("Livraison"),
+    RETOURCLIENT("Retour client"), AUTRE("Autre");
+
+    private final String type;
+
+    private MediaType(String type)
+    {
+        this.type = type;
+    }
+
+    public String getType()
+    {
+        return this.type;
+    }
+
+    public String getTypeLowerCase()
+    {
+        return this.type.toLowerCase();
+    }
 }

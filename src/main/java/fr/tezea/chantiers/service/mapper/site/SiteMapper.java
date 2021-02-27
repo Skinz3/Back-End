@@ -21,21 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.service.mapper.site;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
+import fr.tezea.chantiers.domain.site.Site;
+import fr.tezea.chantiers.service.dto.site.SiteDTO;
+import java.util.List;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Data
-@Document
-public class Student
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface SiteMapper
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
-    @Id
-    private long id;
-    private String name;
-    private String professeur;
+    @Mapping(target = "id", ignore = true)
+    Site toSite(SiteDTO siteDTO);
+
+    @InheritInverseConfiguration(name = "toSite")
+    SiteDTO toSiteDTO(Site site);
+
+    List<SiteDTO> toSiteDTO(List<Site> sites);
+
+    @Mapping(target = "id", ignore = true)
+    Site updateSiteFromDTO(SiteDTO siteDTO, @MappingTarget Site site);
 }

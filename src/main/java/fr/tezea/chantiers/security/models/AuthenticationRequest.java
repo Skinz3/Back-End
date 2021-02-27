@@ -21,21 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.security.models;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Data
-@Document
-public class Student
+public class AuthenticationRequest
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
-    @Id
-    private long id;
-    private String name;
-    private String professeur;
+    private String username;
+    private String password;
+
+    public AuthenticationRequest()
+    {
+    }
+
+    public AuthenticationRequest(String username, String password)
+    {
+        super();
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 }

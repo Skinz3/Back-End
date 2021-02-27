@@ -21,21 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.repository.user;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
+import fr.tezea.chantiers.domain.user.Utilisateur;
+import java.util.Optional;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-@Data
-@Document
-public class Student
+@Repository
+public interface UtilisateurRepository extends MongoRepository<Utilisateur, Long>
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
-    @Id
-    private long id;
-    private String name;
-    private String professeur;
+    public Optional<Utilisateur> findByUsername(String username);
 }

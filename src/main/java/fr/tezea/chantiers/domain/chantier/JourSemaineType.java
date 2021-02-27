@@ -21,21 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.domain.chantier;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Data
-@Document
-public class Student
+public enum JourSemaineType
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
-    @Id
-    private long id;
-    private String name;
-    private String professeur;
+    LUNDI("Lundi"), MARDI("Mardi"), MERCREDI("Mercredi"), JEUDI("Jeudi"), VENDREDI("Vendredi"), SAMEDI("Samedi"),
+    DIMANCHE("Dimanche");
+
+    private final String jour;
+
+    private JourSemaineType(String jour)
+    {
+        this.jour = jour;
+    }
+
+    public String getJour()
+    {
+        return this.jour;
+    }
+
+    public String getJourLowerCase()
+    {
+        return this.jour.toLowerCase();
+    }
 }

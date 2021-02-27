@@ -21,21 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.service.dto.chantier;
 
+import fr.tezea.chantiers.domain.chantier.JourSemaineType;
+import fr.tezea.chantiers.service.dto.client.ClientDTO;
+import fr.tezea.chantiers.service.dto.site.SiteDTO;
+import java.util.Date;
+import java.util.Set;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document
-public class Student
+public class DemandeDeChantierGetDTO
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
-    @Id
     private long id;
-    private String name;
-    private String professeur;
+    private SiteDTO site;
+    private ClientDTO client;
+    private int nombreEmployes;
+    private String materiel;
+    private String adresse;
+    private boolean regularite;
+    private int estimationTemps;
+    private String particularite;
+    private String description;
+    private String informationsInterne;
+    private Date dateDebutRegularite;
+    private Date dateFinRegularite;
+    private Set<JourSemaineType> joursRegularite;
 }

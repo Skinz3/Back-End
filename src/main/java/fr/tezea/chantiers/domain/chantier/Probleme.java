@@ -21,8 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.domain.chantier;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -30,12 +33,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-public class Student
+public class Probleme
 {
     @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
+    public static final String SEQUENCE_NAME = "probleme_sequence";
     @Id
     private long id;
-    private String name;
-    private String professeur;
+    private String description;
+    private Set<String> imagesURL;
+    private Date date;
+
+    public Probleme()
+    {
+        this.imagesURL = new HashSet<>();
+    }
 }

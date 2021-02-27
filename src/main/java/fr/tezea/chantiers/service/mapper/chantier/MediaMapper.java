@@ -21,21 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.service.mapper.chantier;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
+import fr.tezea.chantiers.domain.chantier.Media;
+import fr.tezea.chantiers.service.dto.chantier.MediaDTO;
+import java.util.List;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Data
-@Document
-public class Student
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface MediaMapper
 {
-    @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
-    @Id
-    private long id;
-    private String name;
-    private String professeur;
+    @Mapping(target = "id", ignore = true)
+    Media toMedia(MediaDTO mediaDTO);
+
+    @InheritInverseConfiguration(name = "toMedia")
+    MediaDTO toMediaDTO(Media media);
+
+    List<MediaDTO> toMediaDTO(List<Media> medias);
+
+    @Mapping(target = "id", ignore = true)
+    Media updateMediaFromDTO(MediaDTO mediaDTO, @MappingTarget Media media);
 }

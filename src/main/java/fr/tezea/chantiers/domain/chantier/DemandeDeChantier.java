@@ -21,21 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.domain.school;
+package fr.tezea.chantiers.domain.chantier;
 
+import fr.tezea.chantiers.domain.client.Client;
+import fr.tezea.chantiers.domain.site.Site;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-public class Student
+public class DemandeDeChantier
 {
     @Transient
-    public static final String SEQUENCE_NAME = "student_sequence";
+    public static final String SEQUENCE_NAME = "demandedechantier_sequence";
     @Id
     private long id;
-    private String name;
-    private String professeur;
+    @DBRef
+    private Site site;
+    @DBRef
+    private Client client;
+    private int nombreEmployes;
+    private String materiel;
+    private String adresse;
+    private boolean regularite;
+    private int estimationTemps;
+    private String particularite;
+    private String description;
+    private String informationsInterne;
+    private Date dateDebutRegularite;
+    private Date dateFinRegularite;
+    private Set<JourSemaineType> joursRegularite;
+
+    public DemandeDeChantier()
+    {
+        this.joursRegularite = new HashSet<>();
+    }
 }

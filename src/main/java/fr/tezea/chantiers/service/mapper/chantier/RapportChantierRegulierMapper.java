@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package fr.tezea.chantiers.service.mapper.school;
+package fr.tezea.chantiers.service.mapper.chantier;
 
-import fr.tezea.chantiers.domain.school.Student;
-import fr.tezea.chantiers.service.dto.school.StudentDTO;
+import fr.tezea.chantiers.domain.chantier.RapportChantierRegulier;
+import fr.tezea.chantiers.service.dto.chantier.RapportChantierRegulierDTO;
 import java.util.List;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -33,18 +33,19 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring", uses = {
-        /* ProfesseurMapper.class */ }, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface StudentMapper
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface RapportChantierRegulierMapper
 {
     @Mapping(target = "id", ignore = true)
-    Student toStudent(StudentDTO studentDTO);
+    RapportChantierRegulier toRapportChantierRegulier(RapportChantierRegulierDTO rapportChantierRegulierDTO);
 
-    @InheritInverseConfiguration(name = "toStudent")
-    StudentDTO toStudentDTO(Student student);
+    @InheritInverseConfiguration(name = "toRapportChantierRegulier")
+    RapportChantierRegulierDTO toRapportChantierRegulierDTO(RapportChantierRegulier rapportChantierRegulier);
 
-    List<StudentDTO> toStudentDTO(List<Student> students);
+    List<RapportChantierRegulierDTO> toRapportChantierRegulierDTO(
+            List<RapportChantierRegulier> rapportChantierReguliers);
 
     @Mapping(target = "id", ignore = true)
-    Student updateStudentFromDTO(StudentDTO studentDTO, @MappingTarget Student student);
+    RapportChantierRegulier updateRapportChantierRegulierFromDTO(RapportChantierRegulierDTO rapportChantierRegulierDTO,
+            @MappingTarget RapportChantierRegulier rapportChantierRegulier);
 }
