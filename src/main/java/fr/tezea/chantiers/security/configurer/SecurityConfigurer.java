@@ -25,6 +25,7 @@ package fr.tezea.chantiers.security.configurer;
 
 import fr.tezea.chantiers.security.filters.JwtRequestFilter;
 import fr.tezea.chantiers.security.services.MyUserDetailsService;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +37,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.*;
 
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter
@@ -52,9 +54,21 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
         auth.userDetailsService(userDetailsService);
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource()
+    {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
+        http.cors();
         http.csrf().disable().authorizeRequests()
                 //https://stackoverflow.com/questions/30819337/multiple-antmatchers-in-spring-security
                 //Pour plus d'informations sur la formation des authorisations sur les differentes API

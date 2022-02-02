@@ -46,7 +46,7 @@ public class MyUserDetailsService implements UserDetailsService
         //System.out.println("Loading user");
         Utilisateur user = utilisateurRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        //System.out.println("User : " + user.getUsername() + " loaded");
+        System.out.println("User : " + user.getUsername() + " loaded");
         UserDetails toReturn = User.builder().username(user.getUsername()).password(user.getPassword())
                 .roles(user.getRole().getType()).build();
         return toReturn;

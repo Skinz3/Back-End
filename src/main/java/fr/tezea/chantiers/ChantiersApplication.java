@@ -35,6 +35,4 @@ public class ChantiersApplication
     {
         SpringApplication.run(ChantiersApplication.class, args);
     }
-    
-   
 }
