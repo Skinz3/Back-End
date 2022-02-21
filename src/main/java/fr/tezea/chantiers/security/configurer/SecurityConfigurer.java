@@ -60,7 +60,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
     {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        
         return source;
     }
 
@@ -73,7 +72,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
                 //Pour plus d'informations sur la formation des authorisations sur les differentes API
                 .antMatchers("/api/" + API_VERSION + "/authentification/authentifier").permitAll()
                 .antMatchers("/api/" + API_VERSION + "/chantier/*").permitAll()
-                 hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
+               //  hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
                 .antMatchers("/api/" + API_VERSION + "/demandedechantier/**")
                 .hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
                 .antMatchers("/api/" + API_VERSION + "/media/**").hasAnyRole("Administration", "Telephone", "Direction")
