@@ -59,14 +59,19 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
     CorsConfigurationSource corsConfigurationSource()
     {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-       // source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-      
+        source.registerCorsConfiguration("/**", 
+        		new CorsConfiguration()
+        		.applyPermitDefaultValues()
+        		.addAllowedMethod("PUT"));
+
+        
         return source;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
+    	
         http.cors();
         http.csrf().disable().authorizeRequests()
                 //https://stackoverflow.com/questions/30819337/multiple-antmatchers-in-spring-security
