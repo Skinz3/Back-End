@@ -25,7 +25,7 @@ package fr.tezea.chantiers.domain.chantier;
 
 public enum JourSemaineType
 {
-    LUNDI("Lundi"), MARDI("Mardi"), MERCREDI("Mercredi"), JEUDI("Jeudi"), VENDREDI("Vendredi"), SAMEDI("Samedi"),
+    LUNDI("Lundi") = 1, MARDI("Mardi"), MERCREDI("Mercredi"), JEUDI("Jeudi"), VENDREDI("Vendredi"), SAMEDI("Samedi"),
     DIMANCHE("Dimanche");
 
     private final String jour;
