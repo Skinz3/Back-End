@@ -82,5 +82,9 @@ public class Chantier
         this.medias = new HashSet<>();
         this.ouvriers = new HashSet<>();
         this.rapportsRegulier = new HashSet<>();
+        this.dateDebutTheorique = new Date(System.currentTimeMillis());
+        this.dateFinTheorique = new Date(System.currentTimeMillis());
+        this.dateDebutEffectif = new Date(System.currentTimeMillis());
+        this.dateFinEffectif = new Date(System.currentTimeMillis());
     }
 }
