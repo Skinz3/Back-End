@@ -69,4 +69,5 @@ public class ChantierDTO
         this.dateFinTheorique = new Date(System.currentTimeMillis());
         this.dateDebutEffectif = new Date(System.currentTimeMillis());
         this.dateFinEffectif = new Date(System.currentTimeMillis());
+    }
 }
