@@ -62,4 +62,11 @@ public class ChantierDTO
     private String volume;
     private String poid;
     private String accessibilite;
+    
+    public ChantierDTO()
+    {
+        this.dateDebutTheorique = new Date(System.currentTimeMillis());
+        this.dateFinTheorique = new Date(System.currentTimeMillis());
+        this.dateDebutEffectif = new Date(System.currentTimeMillis());
+        this.dateFinEffectif = new Date(System.currentTimeMillis());
 }
