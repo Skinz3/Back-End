@@ -79,7 +79,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter
                 //https://stackoverflow.com/questions/30819337/multiple-antmatchers-in-spring-security
                 //Pour plus d'informations sur la formation des authorisations sur les differentes API
                 .antMatchers("/api/" + API_VERSION + "/authentification/authentifier").permitAll()
-                .antMatchers("/api/" + API_VERSION + "/chantier/*").permitAll()
+                .antMatchers("/api/" + API_VERSION + "/chantier/*")
                  .hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
                 .antMatchers("/api/" + API_VERSION + "/demandedechantier/**")
                 .hasAnyRole("Administration", "Telephone", "Direction", "Chef de site")
